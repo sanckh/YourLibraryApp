@@ -17,9 +17,10 @@ namespace Infrastructure.Services
         {
             bookRepository = _boo;
         }
-        public Task<int> DeleteBookAsync(int id)
+        public async Task<int> DeleteBookAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await bookRepository.DeleteAsync(id);
+            return entity.Id;
         }
 
         public async Task<IEnumerable<BookModel>> GetAllBooksAsync()
@@ -61,6 +62,10 @@ namespace Infrastructure.Services
         public async Task<int> UpdateBookAsync(BookModel model)
         {
             var book = await bookRepository.GetByIdAsync(model.Id);
+
+            if (book == null)
+                throw new ArgumentException("Book not found");
+
             book.Title = model.Title;
             book.Description = model.Description;
             book.Genre = model.Genre;
@@ -69,7 +74,7 @@ namespace Infrastructure.Services
             book.Rating = model.Rating;
             book.CoverUrl = model.CoverUrl;
 
-            book.Update(book);
+            await bookRepository.UpdateAsync(book);
             return await bookRepository.SaveChangesAsync();
         }
     }

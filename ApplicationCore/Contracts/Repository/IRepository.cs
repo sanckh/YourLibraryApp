@@ -10,8 +10,8 @@ namespace ApplicationCore.Contracts.Repository
     public interface IRepository<T> where T : class
     {
         Task<int> InsertAsync(T entity);
-        Task<int> UpdateAsync(T entity);
-        Task<int> DeleteAsync(int id);
+        Task<T> UpdateAsync(T entity);
+        Task<T> DeleteAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> filter);
         Task<T> GetByIdAsync(int id);

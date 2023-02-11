@@ -54,7 +54,9 @@ namespace Infrastructure.Services
 
             existingAuthor.FullName = author.FullName;
 
-            return await authorRepository.UpdateAsync(existingAuthor);
+            await authorRepository.UpdateAsync(existingAuthor);
+
+            return await authorRepository.SaveChangesAsync();
         }
 
         public async Task<int> DeleteAuthorAsync(int id)
@@ -65,7 +67,9 @@ namespace Infrastructure.Services
                 return 0;
             }
 
-            return await authorRepository.DeleteAsync(id);
+            await authorRepository.DeleteAsync(id);
+
+            return await authorRepository.SaveChangesAsync();
         }
     }
 }

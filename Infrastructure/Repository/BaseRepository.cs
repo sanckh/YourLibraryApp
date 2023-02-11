@@ -17,19 +17,12 @@ namespace Infrastructure.Repository
         {
             _db = _con;
         }
-        public async Task<int> DeleteAsync(int id)
+        public async Task<T> DeleteAsync(int id)
         {
             var entity = await _db.Set<T>().FindAsync(id);
-            if (entity != null)
-            {
-                _db.Set<T>().Remove(entity);
-                await _db.SaveChangesAsync();
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            _db.Set<T>().Remove(entity);
+            await _db.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -68,11 +61,11 @@ namespace Infrastructure.Repository
         }
 
 
-        public async Task<int> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             _db.Entry(entity).State = EntityState.Modified;
             await _db.SaveChangesAsync();
-            return 1;
+            return entity;
         }
     }
 }
