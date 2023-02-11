@@ -55,6 +55,18 @@ namespace Infrastructure.Repository
             return 1;
         }
 
+        public async Task<T> AddAsync(T entity)
+        {
+            await _db.Set<T>().AddAsync(entity);
+            await SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _db.SaveChangesAsync();
+        }
+
 
         public async Task<int> UpdateAsync(T entity)
         {

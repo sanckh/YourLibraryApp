@@ -22,19 +22,55 @@ namespace Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<BookModel>> GetAllBooksAsync()
+        public async Task<IEnumerable<BookModel>> GetAllBooksAsync()
         {
-            throw new NotImplementedException();
+            var books = await bookRepository.GetAllAsync();
+
+            return books.Select(b => new BookModel
+            {
+                Id = b.Id,
+                Title = b.Title,
+                Description = b.Description,
+                Genre = b.Genre,
+                isRead = b.isRead,
+                DateRead = b.DateRead,
+                Rating = b.Rating,
+                CoverUrl = b.CoverUrl,
+                DateAdded = b.DateAdded,
+            });
         }
 
-        public Task<int> InsertBookAsync(BookModel model)
+        public async Task<int> InsertBookAsync(BookModel model)
         {
-            throw new NotImplementedException();
+            var book = new Book
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Description = model.Description,
+                Genre = model.Genre,
+                isRead = model.isRead,
+                DateRead = model.DateRead,
+                Rating = model.Rating,
+                CoverUrl = model.CoverUrl,
+                DateAdded = model.DateAdded,
+            };
+            await bookRepository.AddAsync(book);
+            return await bookRepository.SaveChangesAsync();
         }
 
-        public Task<int> UpdateBookAsync(BookModel model)
+        public async Task<int> UpdateBookAsync(BookModel model)
         {
-            throw new NotImplementedException();
+            var book = await bookRepository.GetByIdAsync(model.Id);
+            book.Title = model.Title;
+            book.Description = model.Description;
+            book.Genre = model.Genre;
+            book.isRead = model.isRead;
+            book.DateRead = model.DateRead;
+            book.Rating = model.Rating;
+            book.CoverUrl = model.CoverUrl;
+
+            book.Update(book);
+            return await bookRepository.SaveChangesAsync();
         }
     }
 }
