@@ -17,5 +17,13 @@ namespace ApplicationCore.Models
         public int? Rating { get; set; }
         public string CoverUrl { get; set; }
         public DateTime DateAdded { get; set; }
+
+        //navigation props
+        public int? PublisherId { get; set; }
+        public PublisherModel Publisher { get; set; }
+        public List<AuthorModel> Authors { get; set; }
+
+        //book author nav prop
+        public List<Book_AuthorModel> Book_Authors { get; set; }
     }
 }

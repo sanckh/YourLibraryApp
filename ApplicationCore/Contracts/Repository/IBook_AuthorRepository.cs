@@ -7,7 +7,7 @@ using ApplicationCore.Entities;
 
 namespace ApplicationCore.Contracts.Repository
 {
-    public interface IBook_AuthorRepositoryIRepository<Book_Author>
+    public interface IBook_AuthorRepository : IRepository<Book_Author>
     {
     }
 }

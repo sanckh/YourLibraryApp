@@ -13,5 +13,6 @@ namespace ApplicationCore.Contracts.Services
         Task<int> InsertBookAsync(BookModel model);
         Task<int> DeleteBookAsync(int id);
         Task<int> UpdateBookAsync(BookModel model);
+        Task<BookModel> GetBookByIdAsync(int id);
     }
 }

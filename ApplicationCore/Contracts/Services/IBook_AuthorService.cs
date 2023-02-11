@@ -9,5 +9,6 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IBook_AuthorService
     {
+        Task<IEnumerable<Book_AuthorModel>> GetAllBooksWithAuthorsAsync();
     }
 }

@@ -38,11 +38,13 @@ namespace YourLibraryAPI
             service.AddScoped<IBookRepository, BookRepository>();
             service.AddScoped<IAuthorRepository, AuthorRepository>();
             service.AddScoped<IPublisherRepository, PublisherRepository>();
+            service.AddScoped<IBook_AuthorRepository, Book_AuthorRepository>();
 
             //configure the services
             service.AddScoped<IBookService, BookService>();
             service.AddScoped<IAuthorService, AuthorService>();
             service.AddScoped<IPublisherService, PublisherService>();
+            service.AddScoped<IBook_AuthorService, Book_AuthorService>();
 
             service.AddSwaggerGen(c =>
             {

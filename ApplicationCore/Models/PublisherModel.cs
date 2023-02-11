@@ -12,6 +12,8 @@ namespace ApplicationCore.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+        //defines the relationship between models
+        public List<BookModel> Books { get; set; }
         public List<PublisherModel> Publishers { get; set; }
     }
 }
