@@ -17,9 +17,20 @@ namespace Infrastructure.Services
         {
             _publisherRepository = _pub;
         }
-        public Task<PublisherModel> GetAllPublishersAsync(PublisherModel model)
+        public async Task<PublisherModel> GetAllPublishersAsync(PublisherModel model)
         {
-            throw new NotImplementedException();
+            var publishers = await _publisherRepository.GetAllAsync();
+            var publisherModels = new List<PublisherModel>();
+            foreach (var publisher in publishers)
+            {
+                publisherModels.Add(new PublisherModel
+                {
+                    Id = publisher.Id,
+                    Name = publisher.Name
+                });
+            }
+            model.Publishers = publisherModels;
+            return model;
         }
     }
 }
