@@ -9,11 +9,19 @@ namespace ApplicationCore.Models
     public class PublisherModel
     {
         //one to many example. One publisher, multiple books
-        public int Id { get; set; }
         public string Name { get; set; }
 
-        //defines the relationship between models
-        public List<BookModel> Books { get; set; }
-        public List<PublisherModel> Publishers { get; set; }
+    }
+    public class PublisherWithBooksAndAuthorsModel
+    {
+        public string Name { get; set; }
+        public List<BookAuthorModel> BookAuthors { get; set; }
+    }
+
+    public class BookAuthorModel
+    {
+        public string BookName { get; set; }
+        public List<string> BookAuthors { get; set; }
+
     }
 }

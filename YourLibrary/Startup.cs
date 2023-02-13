@@ -44,7 +44,6 @@ namespace YourLibraryAPI
             service.AddScoped<IBookService, BookService>();
             service.AddScoped<IAuthorService, AuthorService>();
             service.AddScoped<IPublisherService, PublisherService>();
-            service.AddScoped<IBook_AuthorService, Book_AuthorService>();
 
             service.AddSwaggerGen(c =>
             {

@@ -44,20 +44,20 @@ namespace Infrastructure.Services
 
 
 
-        public async Task<int> UpdateAuthorAsync(AuthorModel author)
-        {
-            var existingAuthor = await authorRepository.GetByIdAsync(author.Id);
-            if (existingAuthor == null)
-            {
-                return 0;
-            }
+        //public async Task<int> UpdateAuthorAsync(AuthorModel author)
+        //{
+        //    var existingAuthor = await authorRepository.GetByIdAsync(author.Id);
+        //    if (existingAuthor == null)
+        //    {
+        //        return 0;
+        //    }
 
-            existingAuthor.FullName = author.FullName;
+        //    existingAuthor.FullName = author.FullName;
 
-            await authorRepository.UpdateAsync(existingAuthor);
+        //    await authorRepository.UpdateAsync(existingAuthor);
 
-            return await authorRepository.SaveChangesAsync();
-        }
+        //    return await authorRepository.SaveChangesAsync();
+        //}
 
         public async Task<int> DeleteAuthorAsync(int id)
         {

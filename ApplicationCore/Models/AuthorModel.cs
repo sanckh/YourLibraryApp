@@ -9,7 +9,6 @@ namespace ApplicationCore.Models
     public class AuthorModel
     {
         //many to many example. Many books, many authors
-        public int Id { get; set; }
         public string FullName { get; set; }
     }
     public class AuthorWithBooksModel

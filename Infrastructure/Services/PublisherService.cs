@@ -17,20 +17,15 @@ namespace Infrastructure.Services
         {
             _publisherRepository = _pub;
         }
-        public async Task<PublisherModel> GetAllPublishersAsync(PublisherModel model)
+        public void AddPublisher(PublisherModel publisher)
         {
-            var publishers = await _publisherRepository.GetAllAsync();
-            var publisherModels = new List<PublisherModel>();
-            foreach (var publisher in publishers)
+            var _publisher = new Publisher()
             {
-                publisherModels.Add(new PublisherModel
-                {
-                    Id = publisher.Id,
-                    Name = publisher.Name
-                });
-            }
-            model.Publishers = publisherModels;
-            return model;
+                Name = publisher.Name
+            };
+
+            _publisherRepository.AddAsync(_publisher);
+            _publisherRepository.SaveChangesAsync();
         }
     }
 }

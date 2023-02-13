@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Infrastructure.Services
 {
@@ -33,7 +34,6 @@ namespace Infrastructure.Services
 
             return books.Select(b => new BookModel
             {
-                Id = b.Id,
                 Title = b.Title,
                 Description = b.Description,
                 Genre = b.Genre,
@@ -45,54 +45,10 @@ namespace Infrastructure.Services
             });
         }
 
-        public async Task<int> InsertBookAsync(BookModel model)
+        public void InsertBookWithAuthorAsync(BookModel book)
         {
-            var book = new Book
+            var _book = new Book()
             {
-                Id = model.Id,
-                Title = model.Title,
-                Description = model.Description,
-                Genre = model.Genre,
-                isRead = model.isRead,
-                DateRead = model.DateRead,
-                Rating = model.Rating,
-                CoverUrl = model.CoverUrl,
-                DateAdded = model.DateAdded,
-            };
-            await _bookRepository.AddAsync(book);
-            return await _bookRepository.SaveChangesAsync();
-        }
-
-        public async Task<int> UpdateBookAsync(BookModel model)
-        {
-            var book = await _bookRepository.GetByIdAsync(model.Id);
-
-            if (book == null)
-                throw new ArgumentException("Book not found");
-
-            book.Title = model.Title;
-            book.Description = model.Description;
-            book.Genre = model.Genre;
-            book.isRead = model.isRead;
-            book.DateRead = model.DateRead;
-            book.Rating = model.Rating;
-            book.CoverUrl = model.CoverUrl;
-
-            await _bookRepository.UpdateAsync(book);
-            return await _bookRepository.SaveChangesAsync();
-        }
-
-        public async Task<BookModel> GetBookByIdAsync(int id)
-        {
-            var book = await _bookRepository.GetByIdAsync(id);
-
-            if(book == null)
-            {
-                throw new ArgumentException("Book not found");
-            }
-            var bookModel = new BookModel
-            {
-                Id = book.Id,
                 Title = book.Title,
                 Description = book.Description,
                 Genre = book.Genre,
@@ -100,24 +56,77 @@ namespace Infrastructure.Services
                 DateRead = book.DateRead,
                 Rating = book.Rating,
                 CoverUrl = book.CoverUrl,
-                DateAdded = book.DateAdded,
-                PublisherId = book.PublisherId,
+                DateAdded = DateTime.Now,
+                PublisherId = book.PublisherId
             };
+             _bookRepository.AddAsync(_book);
+             _bookRepository.SaveChangesAsync();
 
-            var book_Authors = await _book_AuthorRepository.GetAllAsync();
-            var authorModels = new List<AuthorModel>();
-            foreach(var book_Author in book_Authors.Where(x => x.BookId == id))
+            // Populate the Book property for each Book_AuthorModel
+            foreach (var id in book.AuthorIds)
             {
-                var author = await _authorRepository.GetByIdAsync(book_Author.AuthorId);
-                var authorModel = new AuthorModel
+                var _book_author = new Book_Author()
                 {
-                    Id = author.Id,
-                    FullName = author.FullName
+                    BookId = _book.Id,
+                    AuthorId = id
                 };
-                authorModels.Add(authorModel);
+                _book_AuthorRepository.AddAsync(_book_author);
+                _bookRepository.SaveChangesAsync();
             }
-            bookModel.Authors = authorModels;
-            return bookModel;
+        }
+
+
+        public async Task<Book> UpdateBookByIdAsync(int bookId, BookModel book)
+        {
+            var books = await _bookRepository.GetAllAsync();
+            var _book = books.FirstOrDefault(n => n.Id == bookId);
+
+            if (_book == null)
+                throw new ArgumentException("Book not found");
+
+            if (_book != null)
+            {
+                _book.Title = book.Title;
+                _book.Description = book.Description;
+                _book.DateRead = book.isRead ? book.DateRead.Value : null;
+                _book.Genre = book.Genre;
+                _book.isRead = book.isRead;
+                _book.Rating = book.isRead ? book.Rating.Value : null;
+                _book.CoverUrl = book.CoverUrl;
+
+               await _bookRepository.SaveChangesAsync();
+            }
+            return _book;
+        }
+
+        public async Task<BookWithAuthorsModel> GetBookByIdAsync(int bookId)
+        {
+            var books = await _bookRepository.GetAllAsync();
+            if(books == null)
+            {
+                throw new ArgumentException("Book not found");
+            }
+            var _book = books.Where(n => n.Id == bookId)
+                 .Select(book => new BookWithAuthorsModel()
+                 {
+                     Title = book.Title,
+                     Description = book.Description,
+                     Genre = book.Genre,
+                     isRead = book.isRead,
+                     DateRead = book.DateRead,
+                     Rating = book.Rating,
+                     CoverUrl = book.CoverUrl,
+                     PublisherName = book.Publisher?.Name,
+                     AuthorNames = book.Book_Authors?.Select(n => n.Author.FullName).ToList() ?? new List<string>()
+                 }).FirstOrDefault();
+
+
+            if (_book == null)
+            {
+                throw new ArgumentException("Book not found");
+            }
+
+            return _book;
         }
     }
 }

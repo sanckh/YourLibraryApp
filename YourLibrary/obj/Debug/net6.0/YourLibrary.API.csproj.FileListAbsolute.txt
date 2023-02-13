@@ -90,3 +90,11 @@ C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.dll
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\ref\YourLibrary.API.dll
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.pdb
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.genruntimeconfig.cache
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
