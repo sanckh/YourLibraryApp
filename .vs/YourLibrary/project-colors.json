@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "3751ef2e-b622-4880-b7c3-ba6c8540e795": {
+      "ProjectGuid": "3751ef2e-b622-4880-b7c3-ba6c8540e795",
+      "DisplayName": "YourLibrary.API",
+      "ColorIndex": 0
+    },
+    "a2704e74-967c-43a8-b2b7-e189adfd8f34": {
+      "ProjectGuid": "a2704e74-967c-43a8-b2b7-e189adfd8f34",
+      "DisplayName": "Infrastructure",
+      "ColorIndex": 1
+    },
+    "25365ee8-759d-43c5-9fd1-342e677a2074": {
+      "ProjectGuid": "25365ee8-759d-43c5-9fd1-342e677a2074",
+      "DisplayName": "ApplicationCore",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 3
+}
