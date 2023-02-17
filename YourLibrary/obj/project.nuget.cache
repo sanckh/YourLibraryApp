@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/MWpC+p4yuuAQQ/qN95NVrvW5fJqAHeabVKKgxh9bBdFk6nhnVTvMcVjGNzksN75MtKtRvGhzJSVgbElxT6B8g==",
+  "dgSpecHash": "UYHMoOt5IGXV7e7YOQ8Z4dAS0Y+s/AVQVcx85Egs2HikhYPOsgiAlmWoR1+dUWiyD9k49UfBdrO6IWK1IBiRRA==",
   "success": true,
   "projectFilePath": "C:\\Programming\\YourLibrary\\YourLibrary\\YourLibrary.API.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\Corey\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
     "C:\\Users\\Corey\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Corey\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
+    "C:\\Users\\Corey\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.0\\microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",
     "C:\\Users\\Corey\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
     "C:\\Users\\Corey\\.nuget\\packages\\microsoft.aspnetcore.authorization.policy\\2.2.0\\microsoft.aspnetcore.authorization.policy.2.2.0.nupkg.sha512",
     "C:\\Users\\Corey\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",

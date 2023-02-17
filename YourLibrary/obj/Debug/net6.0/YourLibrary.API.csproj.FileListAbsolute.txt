@@ -98,3 +98,9 @@ C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.CodeAnalysis.C
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\angular.json
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\package-lock.json
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\package.json
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\tsconfig.app.json
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\tsconfig.json
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\tsconfig.spec.json
