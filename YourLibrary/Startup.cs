@@ -23,6 +23,8 @@ namespace YourLibraryAPI
         public void ConfigureServices(IServiceCollection service)
         {
             service.AddControllers();
+            service.AddControllers().AddNewtonsoftJson();
+
 
             //configure repositories
             service.AddScoped<IBookRepository, BookRepository>();

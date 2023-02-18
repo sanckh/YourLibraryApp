@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Contracts.Repository;
 using ApplicationCore.Contracts.Services;
+using ApplicationCore.Enums;
 using ApplicationCore.Entities;
 using ApplicationCore.Models;
 using System;
@@ -28,11 +29,21 @@ namespace Infrastructure.Services
             return entity.Id;
         }
 
-        public async Task<IEnumerable<BookModel>> GetAllBooksAsync()
+        public async Task<PagedResult<BookModel>> GetAllBooksAsync(int pageNumber, int pageSize, string sortColumn, SortDirection sortDirection)
         {
             var books = await _bookRepository.GetAllAsync();
 
-            return books.Select(b => new BookModel
+            var totalCount = books.Count();
+
+            //Apply sorting
+            books = sortDirection == SortDirection.Ascending
+                    ? books.OrderBy(b => b.GetType().GetProperty(sortColumn).GetValue(b))
+                    : books.OrderByDescending(b => b.GetType().GetProperty(sortColumn).GetValue(b));
+
+            // Apply pagination
+            books = books.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+            var bookModels = books.Select(b => new BookModel
             {
                 Title = b.Title,
                 Description = b.Description,
@@ -43,6 +54,16 @@ namespace Infrastructure.Services
                 CoverUrl = b.CoverUrl,
                 DateAdded = b.DateAdded,
             });
+
+            return new PagedResult<BookModel>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                SortColumn = sortColumn,
+                SortDirection = sortDirection,
+                Results = bookModels.ToList(),
+            };
         }
 
         public void InsertBookWithAuthorAsync(BookModel book)

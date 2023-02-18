@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ApplicationCore.Models;
 using ApplicationCore.Contracts.Services;
+using ApplicationCore.Enums;
 
 namespace YourLibrary.API.Controllers
 {
@@ -19,9 +20,9 @@ namespace YourLibrary.API.Controllers
         }
 
         [HttpGet("GetAllBooks")]
-        public async Task<ActionResult<IEnumerable<BookModel>>> GetAllBooksAsync()
+        public async Task<ActionResult<IEnumerable<BookModel>>> GetAllBooksAsync(int pageNumber = 1, int pageSize = 10, string sortColumn = "Title", SortDirection sortDirection = SortDirection.Ascending)
         {
-            var books = await _bookService.GetAllBooksAsync();
+            var books = await _bookService.GetAllBooksAsync(pageNumber, pageSize, sortColumn, sortDirection);
             return Ok(books);
         }
 

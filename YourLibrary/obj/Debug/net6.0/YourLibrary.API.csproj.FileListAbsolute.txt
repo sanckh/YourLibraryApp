@@ -105,3 +105,4 @@ C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\tsconfig.app.
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\tsconfig.json
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\tsconfig.spec.json
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
