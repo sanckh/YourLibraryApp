@@ -42,6 +42,23 @@ namespace Infrastructure.Services
             return authorWithBooks;
         } 
 
+
+
+        //public async Task<int> UpdateAuthorAsync(AuthorModel author)
+        //{
+        //    var existingAuthor = await authorRepository.GetByIdAsync(author.Id);
+        //    if (existingAuthor == null)
+        //    {
+        //        return 0;
+        //    }
+
+        //    existingAuthor.FullName = author.FullName;
+
+        //    await authorRepository.UpdateAsync(existingAuthor);
+
+        //    return await authorRepository.SaveChangesAsync();
+        //}
+
         public async Task<int> DeleteAuthorAsync(int id)
         {
             var author = await authorRepository.GetByIdAsync(id);
@@ -49,10 +66,10 @@ namespace Infrastructure.Services
             {
                 return 0;
             }
-            await authorRepository.DeleteAsync(id);
-            await authorRepository.SaveChangesAsync();
 
-            return id;
+            await authorRepository.DeleteAsync(id);
+
+            return await authorRepository.SaveChangesAsync();
         }
     }
 }
