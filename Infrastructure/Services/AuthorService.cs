@@ -49,10 +49,10 @@ namespace Infrastructure.Services
             {
                 return 0;
             }
-
             await authorRepository.DeleteAsync(id);
+            await authorRepository.SaveChangesAsync();
 
-            return await authorRepository.SaveChangesAsync();
+            return id;
         }
     }
 }
