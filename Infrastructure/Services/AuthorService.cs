@@ -71,5 +71,13 @@ namespace Infrastructure.Services
 
             return await authorRepository.SaveChangesAsync();
         }
+
+        public async Task<Author> GetAuthorByNameAsync(string name)
+        {
+            var author = await authorRepository.GetAllAsync();
+            return author.Where(x => x.FullName == name).FirstOrDefault();
+        }
+
+
     }
 }

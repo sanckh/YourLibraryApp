@@ -28,5 +28,13 @@ namespace Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
+
+        public async Task<Author> GetByNameAsync(string name)
+        {
+            return await _db.Authors
+                .Where(a => a.FullName == name)
+                .FirstOrDefaultAsync();
+        }
+
     }
 }

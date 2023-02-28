@@ -17,11 +17,13 @@ namespace Infrastructure.Services
         private readonly IBookRepository _bookRepository;
         private readonly IBook_AuthorRepository _book_AuthorRepository;
         private readonly IAuthorRepository _authorRepository;
-        public BookService(IBookRepository bookRepository, IBook_AuthorRepository book_AuthorRepository, IAuthorRepository authorRepository)
+        private readonly IAuthorService _authorService; 
+        public BookService(IBookRepository bookRepository, IBook_AuthorRepository book_AuthorRepository, IAuthorRepository authorRepository, IAuthorService authorService)
         {
             _bookRepository = bookRepository;
             _book_AuthorRepository = book_AuthorRepository;
             _authorRepository = authorRepository;
+            _authorService = authorService;
         }
         public async Task<int> DeleteBookAsync(int id)
         {
@@ -65,37 +67,6 @@ namespace Infrastructure.Services
                 Results = bookModels.ToList(),
             };
         }
-
-        public void InsertBookWithAuthorAsync(BookModel book)
-        {
-            var _book = new Book()
-            {
-                Title = book.Title,
-                Description = book.Description,
-                Genre = book.Genre,
-                isRead = book.isRead,
-                DateRead = book.DateRead,
-                Rating = book.Rating,
-                CoverUrl = book.CoverUrl,
-                DateAdded = DateTime.Now,
-                PublisherId = book.PublisherId
-            };
-             _bookRepository.AddAsync(_book);
-             _bookRepository.SaveChangesAsync();
-
-            // Populate the Book property for each Book_AuthorModel
-            foreach (var id in book.AuthorIds)
-            {
-                var _book_author = new Book_Author()
-                {
-                    BookId = _book.Id,
-                    AuthorId = id
-                };
-                _book_AuthorRepository.AddAsync(_book_author);
-                _bookRepository.SaveChangesAsync();
-            }
-        }
-
 
         public async Task<Book> UpdateBookByIdAsync(int bookId, BookModel book)
         {
@@ -149,5 +120,41 @@ namespace Infrastructure.Services
 
             return _book;
         }
-    }
+
+        //now in the service level, let's create the logic behind that idea
+        public async Task<int> InsertBookWithAuthorAsync(BookWithAuthorsModel book)
+        {
+            //lets get our authors
+            var author = await _authorService.GetAuthorByNameAsync(book.AuthorNames.FirstOrDefault());
+
+            //null check
+            if (author == null)
+            {
+                // we have a null author when we insert a new book, so lets add the author!
+                author = new Author { FullName = book.AuthorNames.FirstOrDefault() };
+                await _authorService.InsertAuthorAsync(new AuthorModel { FullName = author.FullName });
+                author = await _authorService.GetAuthorByNameAsync(book.AuthorNames.FirstOrDefault());
+            }
+
+            Book _book = new Book();
+            _book.Title = book.Title;
+            _book.Description = book.Description;
+            _book.Genre = book.Genre;
+            _book.isRead = book.isRead;
+            _book.DateRead = book.DateRead;
+            _book.Rating = book.Rating;
+            _book.CoverUrl = book.CoverUrl;
+            _book.DateAdded = book.DateAdded;
+
+            await _bookRepository.InsertAsync(_book);
+
+            //now lets add the id of the book and the id of the author to our db! Great example of many to many relationships.
+            Book_Author bookAuthor = new Book_Author();
+            bookAuthor.BookId = _book.Id;
+            bookAuthor.AuthorId = author.Id;
+            await _book_AuthorRepository.InsertAsync(bookAuthor);
+
+            //dont forget to save!
+            return await _bookRepository.SaveChangesAsync();
+        }
 }

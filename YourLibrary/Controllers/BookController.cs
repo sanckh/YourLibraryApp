@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ApplicationCore.Models;
 using ApplicationCore.Contracts.Services;
 using ApplicationCore.Enums;
+using ApplicationCore.Contracts.Repository;
 
 namespace YourLibrary.API.Controllers
 {
@@ -13,10 +14,14 @@ namespace YourLibrary.API.Controllers
     public class BookController : ControllerBase
     {
         private readonly IBookService _bookService;
+        private readonly IAuthorService _authorService;
+        private readonly IAuthorRepository _authorRepository;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, IAuthorService authorService, IAuthorRepository authorRepository)
         {
             _bookService = bookService;
+            _authorService = authorService;
+            _authorRepository = authorRepository;
         }
 
         [HttpGet("GetAllBooks")]
@@ -33,14 +38,7 @@ namespace YourLibrary.API.Controllers
             return Ok(book);
 
         }
-        [HttpPost("InsertBookWithAuthors")]
-        public async Task<ActionResult> InsertBookWithAuthorAsync([FromBody] BookModel book)
-        {
 
-            _bookService.InsertBookWithAuthorAsync(book);
-            
-            return Ok();
-        }
         [HttpPut("UpdateBookAsync/{id}")]
         public async Task<ActionResult> UpdateBookByIdAsync(int id, BookModel book)
         {
@@ -57,6 +55,30 @@ namespace YourLibrary.API.Controllers
             {
                 return NotFound();
             }
+            return Ok();
+        }
+
+        [HttpPost("InsertBookWithAuthors")]
+        public async Task<ActionResult> InsertBookWithAuthorAsync([FromBody] BookWithAuthorsModel book)
+        {
+            var authorIds = new List<int>();
+            foreach(var authorName in book.AuthorNames)
+            {
+                var author = await _authorService.GetAuthorByNameAsync(authorName);
+                if(author == null)
+                {
+                    // author doesn't exist, insert it into the database
+                    var authorModel = new AuthorModel { FullName = authorName };
+                    var authorId = await _authorService.InsertAuthorAsync(authorModel);
+                    authorIds.Add(authorId);
+                }
+                else
+                {
+                    authorIds.Add(author.Id);
+                }
+            }
+            book.AuthorIds = authorIds;
+            await _bookService.InsertBookWithAuthorAsync(book);
             return Ok();
         }
     }

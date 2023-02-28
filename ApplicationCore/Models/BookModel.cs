@@ -38,5 +38,6 @@ namespace ApplicationCore.Models
         //represent new db schema
         public string PublisherName { get; set; }
         public List<string> AuthorNames { get; set; }
+        public List<int> AuthorIds { get; set; }
     }
 }
