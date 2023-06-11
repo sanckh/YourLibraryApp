@@ -1,4 +1,5 @@
 C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.deps.json
+C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.runtimeconfig.json
 C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.dll
 C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ref\ApplicationCore.dll
 C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.pdb
@@ -9,6 +10,4 @@ C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.cspr
 C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.dll
 C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ref\ApplicationCore.dll
 C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.pdb
-C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.runtimeconfig.json
 C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.genruntimeconfig.cache
-C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.csproj.AssemblyReference.cache
