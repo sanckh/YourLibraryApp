@@ -17,7 +17,7 @@ namespace Infrastructure.Services
         private readonly IBookRepository _bookRepository;
         private readonly IBook_AuthorRepository _book_AuthorRepository;
         private readonly IAuthorRepository _authorRepository;
-        private readonly IAuthorService _authorService; 
+        private readonly IAuthorService _authorService;
         public BookService(IBookRepository bookRepository, IBook_AuthorRepository book_AuthorRepository, IAuthorRepository authorRepository, IAuthorService authorService)
         {
             _bookRepository = bookRepository;
@@ -86,7 +86,7 @@ namespace Infrastructure.Services
                 _book.Rating = book.isRead ? book.Rating.Value : null;
                 _book.CoverUrl = book.CoverUrl;
 
-               await _bookRepository.SaveChangesAsync();
+                await _bookRepository.SaveChangesAsync();
             }
             return _book;
         }
@@ -94,7 +94,7 @@ namespace Infrastructure.Services
         public async Task<BookWithAuthorsModel> GetBookByIdAsync(int bookId)
         {
             var books = await _bookRepository.GetAllAsync();
-            if(books == null)
+            if (books == null)
             {
                 throw new ArgumentException("Book not found");
             }
@@ -157,4 +157,5 @@ namespace Infrastructure.Services
             //dont forget to save!
             return await _bookRepository.SaveChangesAsync();
         }
+    }
 }
