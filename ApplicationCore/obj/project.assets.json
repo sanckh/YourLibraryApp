@@ -1394,19 +1394,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Corey\\.nuget\\packages\\": {}
+    "C:\\Users\\Daddy\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj",
+      "projectUniqueName": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj",
       "projectName": "ApplicationCore",
-      "projectPath": "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj",
-      "packagesPath": "C:\\Users\\Corey\\.nuget\\packages\\",
-      "outputPath": "C:\\Programming\\YourLibrary\\ApplicationCore\\obj\\",
+      "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj",
+      "packagesPath": "C:\\Users\\Daddy\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Corey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Daddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1462,7 +1462,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

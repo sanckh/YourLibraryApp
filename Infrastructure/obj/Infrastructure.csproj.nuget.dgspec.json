@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj": {}
+    "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj": {
+    "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj",
+        "projectUniqueName": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj",
         "projectName": "ApplicationCore",
-        "projectPath": "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj",
-        "packagesPath": "C:\\Users\\Corey\\.nuget\\packages\\",
-        "outputPath": "C:\\Programming\\YourLibrary\\ApplicationCore\\obj\\",
+        "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj",
+        "packagesPath": "C:\\Users\\Daddy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Corey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Daddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -70,21 +70,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Corey\\.nuget\\packages\\",
-        "outputPath": "C:\\Programming\\YourLibrary\\Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Daddy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Corey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Daddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -98,8 +98,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj": {
-                "projectPath": "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj"
+              "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj": {
+                "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj"
               }
             }
           }
@@ -166,7 +166,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }
