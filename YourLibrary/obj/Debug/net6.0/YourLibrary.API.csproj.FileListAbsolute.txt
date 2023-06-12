@@ -106,3 +106,4 @@ C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.dll
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\ref\YourLibrary.API.dll
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.pdb
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.genruntimeconfig.cache
+C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\YourLibrary.API.csproj.AssemblyReference.cache

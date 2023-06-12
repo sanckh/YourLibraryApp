@@ -24,6 +24,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
@@ -40,5 +44,9 @@
     <TypeScriptCompile Include="client-app\src\app\shared\models\author-model.ts" />
     <TypeScriptCompile Include="client-app\src\app\shared\models\book-model.ts" />
   </ItemGroup>
+
+	<ItemGroup>
+		<TypeScriptCompile Include="**/*.ts" />
+	</ItemGroup>
 
 </Project>
