@@ -214,3 +214,8 @@ C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\r
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\YourLibrary.API.pdb
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\YourLibrary.API.genruntimeconfig.cache
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\ref\YourLibrary.API.dll
+C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\staticwebassets\msbuild.YourLibrary.API.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\staticwebassets\msbuild.build.YourLibrary.API.props
+C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.YourLibrary.API.props
+C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.YourLibrary.API.props
+C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\staticwebassets.pack.json

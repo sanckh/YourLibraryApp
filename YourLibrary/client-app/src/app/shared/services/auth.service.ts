@@ -11,8 +11,8 @@ import { UserRegisterRequestModel } from '../models/auth/userregisterrequestmode
 })
 export class AuthService {
 
-  private loginUrl = '/api/account/login';
-  private registerUrl = '/api/account/register';
+  private loginUrl = 'https://localhost:7007/api/account/login';
+  private registerUrl = 'https://localhost:7007/api/account/register';
 
   constructor(private http: HttpClient) { }
 

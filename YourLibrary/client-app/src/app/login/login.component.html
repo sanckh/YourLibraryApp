@@ -12,4 +12,38 @@
     <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
     <button type="submit">Login</button>
   </form>
+
+  <!-- Trigger button for the modal -->
+  <button (click)="openRegisterModal()">Register</button>
+
+  <!-- Modal -->
+  <div class="modal" [ngClass]="{ 'modal-open': isRegisterModalOpen }">
+    <div class="modal-content">
+      <h2>Register</h2>
+      <form (ngSubmit)="register()">
+        <div class="form-group">
+          <label for="registerEmail">Email:</label>
+          <input type="email" id="registerEmail" name="registerEmail" [(ngModel)]="registerRequest.email" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password:</label>
+          <input type="password" id="registerPassword" name="registerPassword" [(ngModel)]="registerRequest.password" required>
+        </div>
+        <div class="form-group">
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" [(ngModel)]="registerRequest.firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="lastName" [(ngModel)]="registerRequest.lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth:</label>
+          <input type="date" id="dateOfBirth" name="dateOfBirth" [(ngModel)]="registerRequest.dateOfBirth" required>
+        </div>
+        <div class="error-message" *ngIf="registerErrorMessage">{{ registerErrorMessage }}</div>
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
 </div>

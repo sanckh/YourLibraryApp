@@ -71,6 +71,17 @@ namespace YourLibraryAPI
                 };
             });
 
+            //adding CORS Middleware
+            service.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
+
 
         }
 
@@ -85,6 +96,7 @@ namespace YourLibraryAPI
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YourLibrary v1"));
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAnyOrigin");
 
             app.UseRouting();
             app.UseAuthentication();
@@ -95,6 +107,7 @@ namespace YourLibraryAPI
             {
                 endpoints.MapControllers();
             });
+
 
             //AppDbInitializer.Seed(app);
 
