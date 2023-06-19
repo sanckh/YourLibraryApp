@@ -98,7 +98,7 @@ export class RegistrationModalComponent implements OnInit {
     this.controls.password.setValidators([Validators.minLength(5), Validators.required]);
     this.controls.firstName.setValidators([Validators.required]);
     this.controls.lastName.setValidators([Validators.required]);
-    this.controls.dateOfBirth.setValidators([Validators.required]);
+    //this.controls.dateOfBirth.setValidators([Validators.required]);
 
   }
 

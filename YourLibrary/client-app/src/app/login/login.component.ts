@@ -36,13 +36,6 @@ export class LoginComponent implements OnInit {
 
   registerErrorMessage: string = '';
 
-  registerForm = this.formBuilder.group({
-    email: [Validators.email, Validators.required],
-    password: [Validators.minLength(8), Validators.pattern('^(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$'), Validators.required],
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    dateOfBirth: ['', Validators.required]
-  });
 
   constructor(
     private authService: AuthService,
@@ -90,13 +83,14 @@ export class LoginComponent implements OnInit {
     this.authService.register(this.registerRequest).subscribe(
       
       response => {
-        console.log("i got here")
+        console.log("Registration Successful!")
         // Handle successful registration here
         // Display a success message or redirect the user
         this.closeRegisterModal();
       },
       error => {
         // Handle registration error
+        console.error("Registration error: ", error)
         if (error.status === 400 && error.error.message === "This email exists!") {
           this.registerErrorMessage = "Email already exists! Please try again with a different email address."
         }

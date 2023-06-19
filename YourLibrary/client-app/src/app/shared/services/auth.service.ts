@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 
 //Models
 import { UserLoginRequestModel } from '../models/auth/userloginrequestmodel';
@@ -12,7 +12,7 @@ import { UserRegisterRequestModel } from '../models/auth/userregisterrequestmode
 export class AuthService {
 
   private loginUrl = 'https://localhost:7007/api/account/login';
-  private registerUrl = 'https://localhost:7007/api/account/register';
+  private registerUrl = 'https://localhost:7007/api/Account/Register';
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +21,14 @@ export class AuthService {
   }
 
   register(registerRequest: UserRegisterRequestModel): Observable<any> {
-    return this.http.post<any>(this.registerUrl, registerRequest);
+    console.log("I am here");
+    return this.http.post<any>(this.registerUrl, registerRequest).pipe(
+      catchError((error) => {
+        console.error("Registration error:", error);
+        throw error; // Re-throw the error to propagate it to the caller
+      })
+    );
   }
+
+
 }
