@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Services
 import { AuthService } from '../shared/services/auth.service';
@@ -6,6 +7,10 @@ import { AuthService } from '../shared/services/auth.service';
 // Models
 import { UserLoginRequestModel } from '../shared/models/auth/userloginrequestmodel';
 import { UserRegisterRequestModel } from '../shared/models/auth/userregisterrequestmodel';
+
+//Components
+import {RegistrationModalComponent} from '../shared/components/registration-modal/registration-modal.component'; 
+
 
 @Component({
   selector: 'app-login',
@@ -31,7 +36,18 @@ export class LoginComponent implements OnInit {
 
   registerErrorMessage: string = '';
 
-  constructor(private authService: AuthService) { }
+  registerForm = this.formBuilder.group({
+    email: [Validators.email, Validators.required],
+    password: [Validators.minLength(8), Validators.pattern('^(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$'), Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    dateOfBirth: ['', Validators.required]
+  });
+
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -72,7 +88,9 @@ export class LoginComponent implements OnInit {
 
   register(): void {
     this.authService.register(this.registerRequest).subscribe(
+      
       response => {
+        console.log("i got here")
         // Handle successful registration here
         // Display a success message or redirect the user
         this.closeRegisterModal();

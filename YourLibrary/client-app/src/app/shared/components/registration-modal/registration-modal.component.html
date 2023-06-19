@@ -1,0 +1,27 @@
+<div class="modal">
+  <div class="modal-content">
+    <h2>Registration</h2>
+    <form [formGroup]="formGroup">
+      <label>Email:</label>
+      <input type="email" formControlName="email">
+      <div class="error-message">{{ getErrorMessage('email') }}</div>
+
+      <label>Password:</label>
+      <input type="password" formControlName="password">
+
+      <label>First Name:</label>
+      <input type="text" formControlName="firstName">
+
+      <label>Last Name:</label>
+      <input type="text" formControlName="lastName">
+
+      <label>Date of Birth:</label>
+      <input type="date" formControlName="dateOfBirth">
+
+      <div class="buttons">
+        <button type="button" (click)="onCloseClicked()">Close</button>
+        <button type="button" [disabled]="!canSave" (click)="onRegisterClicked()">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
