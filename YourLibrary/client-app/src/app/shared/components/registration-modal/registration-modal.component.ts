@@ -70,6 +70,7 @@ export class RegistrationModalComponent implements OnInit {
     }
   }
 
+
   getErrorMessage(controlName: string): string {
     const control = this.formGroup.get(controlName);
 
