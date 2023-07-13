@@ -6,7 +6,7 @@ import { RegistrationModalComponent } from './components/registration-modal/regi
 
 @NgModule({
   declarations: [
-    RegistrationModalComponent
+    //RegistrationModalComponent
   ],
   imports: [
     CommonModule

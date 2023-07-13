@@ -27,6 +27,10 @@ export class RegistrationModalComponent implements OnInit {
     this.setValidators();
   }
 
+  isRegisterModalOpen(): boolean {
+    return true;
+  }
+
   ngOnInit(): void {
   }
 
