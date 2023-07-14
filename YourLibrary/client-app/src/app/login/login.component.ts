@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import {SweetAlertService} from '../shared/services/sweetalert.service'; 
+import {Router} from '@angular/router'
 // Services
 import { AuthService } from '../shared/services/auth.service';
 
@@ -40,6 +41,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
+    private sweetAlertService: SweetAlertService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +57,7 @@ export class LoginComponent implements OnInit {
         console.log("Success!")
         // You can store the token in localStorage or a cookie for auth purposes
         // Redirect the user to the desired page
+        this.router.navigate(['/home']);
       },
       error => {
         // Handle login error
@@ -79,20 +83,25 @@ export class LoginComponent implements OnInit {
     this.registerErrorMessage = '';
   }
 
-  register(): void {
-    this.authService.register(this.registerRequest).subscribe(
-      
-      response => {
+  register(registerRequest: UserRegisterRequestModel): void {
+    this.authService.register(registerRequest).subscribe(
+      (response) => {
         console.log("Registration Successful!")
-        // Handle successful registration here
-        // Display a success message or redirect the user
-        this.closeRegisterModal();
+        this.sweetAlertService.showSuccessAlert('Success', 'Registration completed successfully')
+        .then((result) => {
+          // Handle the user's action after the alert is closed
+          if (result.isConfirmed) {
+            // Perform any necessary actions after successful registration
+            this.closeRegisterModal();
+          }
+        });
       },
       error => {
         // Handle registration error
         console.error("Registration error: ", error)
         if (error.status === 400 && error.error.message === "This email exists!") {
           this.registerErrorMessage = "Email already exists! Please try again with a different email address."
+          console.log(error.message)
         }
         else {
           this.registerErrorMessage = "An error occurred while registering. Please try again later."

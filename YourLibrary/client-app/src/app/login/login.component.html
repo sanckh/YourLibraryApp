@@ -20,6 +20,8 @@
   <button type="button" (click)="openRegisterModal()">Register</button>
 
   <div *ngIf="isRegisterModalOpen">
-    <app-registration-modal (closeModal)="closeRegisterModal()" (register)="register()"></app-registration-modal>
+    <app-registration-modal 
+    (closeModal)="closeRegisterModal()" 
+    (register)="register($event)"></app-registration-modal>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import {SweetAlertService} from '../../services/sweetalert.service'; 
+import { UserRegisterRequestModel } from '../../models/auth/userregisterrequestmodel';
 
 @Component({
   selector: 'app-registration-modal',
@@ -10,36 +11,27 @@ import {SweetAlertService} from '../../services/sweetalert.service';
 export class RegistrationModalComponent implements OnInit {
 
   @Output() closeModal = new EventEmitter<void>();
-  @Output() register = new EventEmitter<void>();
+  @Output() register = new EventEmitter<UserRegisterRequestModel>();
 
-  private controls = {
-    email: new UntypedFormControl(),
-    password: new UntypedFormControl(),
-    firstName: new UntypedFormControl(),
-    lastName: new UntypedFormControl(),
-    dateOfBirth: new UntypedFormControl()
+  public formGroup: FormGroup;
+
+  constructor(
+    private sweetAlertService: SweetAlertService,
+    private formBuilder: FormBuilder
+    ) {
   }
 
-  public formGroup = new UntypedFormGroup(this.controls);
-
-  constructor(private sweetAlertService: SweetAlertService) {
-
-    this.setValidators();
+  private initializeForm(): void {
+    this.formGroup = this.formBuilder.group({
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.minLength(5), Validators.required]],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      dateOfBirth: [''] // Optional field, no validators added
+    });
   }
 
-  isRegisterModalOpen(): boolean {
-    return true;
-  }
 
-  ngOnInit(): void {
-  }
-
-  //Public Properties
-  get email() { return this.controls.email; }
-  get password() { return this.controls.password; }
-  get firstName() { return this.controls.firstName; }
-  get lastName() { return this.controls.lastName; }
-  get dateOfBirth() { return this.controls.dateOfBirth; }
 
   get canSave() { return this.formGroup.valid; }
 
@@ -61,14 +53,14 @@ export class RegistrationModalComponent implements OnInit {
 
   onRegisterClicked = () => {
     if (this.canSave) {
-      this.sweetAlertService.showSuccessAlert('Success', 'Registration completed successfully')
-        .then((result) => {
-          // Handle the user's action after the alert is closed
-          if (result.isConfirmed) {
-            // Perform any necessary actions after successful registration
-            this.register.emit();
-          }
-        });
+      const registerRequest: UserRegisterRequestModel = {
+        email: this.formGroup.value.email,
+        password: this.formGroup.value.password,
+        firstName: this.formGroup.value.firstName,
+        lastName: this.formGroup.value.lastName,
+        dateOfBirth: this.formGroup.value.dateOfBirth
+      };
+      this.register.emit(registerRequest);
     } else {
       this.sweetAlertService.showErrorAlert('Error', 'Please fill in all required fields');
     }
@@ -96,16 +88,8 @@ export class RegistrationModalComponent implements OnInit {
     return '';
   }
 
-
-
-  private setValidators() {
-    this.controls.email.setValidators([Validators.email, Validators.required]);
-    this.controls.password.setValidators([Validators.minLength(5), Validators.required]);
-    this.controls.firstName.setValidators([Validators.required]);
-    this.controls.lastName.setValidators([Validators.required]);
-    //this.controls.dateOfBirth.setValidators([Validators.required]);
-
+  ngOnInit(): void {
+    this.initializeForm();
   }
-
 
 }
