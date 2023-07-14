@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Programming\\YourLibrary\\YourLibrary\\YourLibrary.API.csproj": {}
+    "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\YourLibrary\\YourLibrary.API.csproj": {}
   },
   "projects": {
-    "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj": {
+    "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj",
+        "projectUniqueName": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj",
         "projectName": "ApplicationCore",
-        "projectPath": "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj",
-        "packagesPath": "C:\\Users\\Corey\\.nuget\\packages\\",
-        "outputPath": "C:\\Programming\\YourLibrary\\ApplicationCore\\obj\\",
+        "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj",
+        "packagesPath": "C:\\Users\\Daddy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Corey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Daddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
               "version": "[6.0.0, )"
@@ -61,7 +65,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -70,21 +75,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Corey\\.nuget\\packages\\",
-        "outputPath": "C:\\Programming\\YourLibrary\\Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Daddy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Corey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Daddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -98,8 +103,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj": {
-                "projectPath": "C:\\Programming\\YourLibrary\\ApplicationCore\\ApplicationCore.csproj"
+              "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj": {
+                "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\ApplicationCore\\ApplicationCore.csproj"
               }
             }
           }
@@ -117,6 +122,10 @@
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Mvc": {
               "target": "Package",
@@ -157,7 +166,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -166,21 +176,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Programming\\YourLibrary\\YourLibrary\\YourLibrary.API.csproj": {
+    "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\YourLibrary\\YourLibrary.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Programming\\YourLibrary\\YourLibrary\\YourLibrary.API.csproj",
+        "projectUniqueName": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\YourLibrary\\YourLibrary.API.csproj",
         "projectName": "YourLibrary.API",
-        "projectPath": "C:\\Programming\\YourLibrary\\YourLibrary\\YourLibrary.API.csproj",
-        "packagesPath": "C:\\Users\\Corey\\.nuget\\packages\\",
-        "outputPath": "C:\\Programming\\YourLibrary\\YourLibrary\\obj\\",
+        "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\YourLibrary\\YourLibrary.API.csproj",
+        "packagesPath": "C:\\Users\\Daddy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\YourLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Corey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Daddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -188,14 +198,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Programming\\YourLibrary\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Daddy\\ProgrammingProjects\\YourLibraryApp\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -213,6 +224,10 @@
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
@@ -249,7 +264,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -261,7 +277,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }

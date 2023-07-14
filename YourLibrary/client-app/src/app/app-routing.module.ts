@@ -1,7 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomePageComponent } from './home-page/home-page.component';
+import { LoginComponent } from './login/login.component'
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, //empty path represents the base URL of the app
+  { path: 'login', component: LoginComponent }, 
+  { path: 'home', component: HomePageComponent, children: [
+    { path: '', redirectTo: 'profile', pathMatch: 'full' },
+    // { path: 'profile', component: ProfileComponent },
+    // { path: 'settings', component: SettingsComponent },
+    // { path: 'subscription', component: SubscriptionComponent },
+    // { path: 'library', component: LibraryComponent },
+  ] }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
