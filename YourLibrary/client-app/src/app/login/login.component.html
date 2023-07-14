@@ -1,0 +1,27 @@
+<div class="login-container">
+  <h2>Login</h2>
+  <div class="book-placeholder">
+    <!-- Add an image of a book or use an icon -->
+  </div>
+  <form (ngSubmit)="login()">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="loginRequest.email" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" [(ngModel)]="loginRequest.password" required>
+    </div>
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <button type="submit">Login</button>
+  </form>
+
+  <!-- Trigger button for the modal -->
+  <button type="button" (click)="openRegisterModal()">Register</button>
+
+  <div *ngIf="isRegisterModalOpen">
+    <app-registration-modal 
+    (closeModal)="closeRegisterModal()" 
+    (register)="register($event)"></app-registration-modal>
+  </div>
+</div>

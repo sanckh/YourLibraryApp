@@ -59,9 +59,14 @@ namespace YourLibrary.API.Controllers
                 new Claim(JwtRegisteredClaimNames.GivenName, model.FirstName),
                 new Claim(JwtRegisteredClaimNames.FamilyName, model.LastName),
                 new Claim(JwtRegisteredClaimNames.Email, model.Email),
-                new Claim(JwtRegisteredClaimNames.Birthdate, model.DateOfBirth.ToShortDateString()),
-                new Claim("language", "english")
+                new Claim("language", "english"),
             };
+
+            if (model.DateOfBirth.HasValue)
+            {
+                claims.Add(new Claim(JwtRegisteredClaimNames.Birthdate, model.DateOfBirth.Value.ToShortDateString()));
+            }
+
             var identityClaims = new ClaimsIdentity();
             identityClaims.AddClaims(claims);
 
