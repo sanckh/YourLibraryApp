@@ -1,17 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CurrentUserModel } from '../../models/currentuser-model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  // private userUrl = 'https://your-api-url/user'; // Replace with the actual API endpoint
+  private currentUserUrl = 'https://localhost:7007/api/user/current'; // Replace with your API URL
 
-  // constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService
+    ) { }
 
-  // getUserData(): Observable<any> {
-  //   // Make an HTTP request to fetch user data
-  //   return this.http.get<any>(this.apiUrl);
-  // }
+  getCurrentUser(): Observable<CurrentUserModel> {
+    const token = this.cookieService.get('jwtToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log("token: ", token);
+    return this.http.get<CurrentUserModel>(this.currentUserUrl, { headers });
+  }
 }

@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 /*import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';*/
 
@@ -42,7 +43,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     MatIconModule,
   ],
   providers: [
-    SweetAlertService
+    SweetAlertService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

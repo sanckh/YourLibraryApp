@@ -21,5 +21,9 @@ namespace Infrastructure.Repository
         {
             return await _db.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
         }
+        
+        public async Task<User> GetUserByIdAsync(int id){
+            return await _db.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
     }
 }

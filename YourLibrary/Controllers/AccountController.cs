@@ -14,11 +14,13 @@ namespace YourLibrary.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService accountService;
+        private readonly IUserService userService;
         private readonly IConfiguration configuration;
-        public AccountController(IAccountService _acc, IConfiguration _con)
+        public AccountController(IAccountService _acc, IConfiguration _con, IUserService _user)
         {
             accountService = _acc;
             configuration = _con;
+            userService = _user;
         }
 
         [HttpPost]

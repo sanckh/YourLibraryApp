@@ -25,6 +25,8 @@ namespace YourLibraryAPI
             service.AddControllers();
             service.AddControllers().AddNewtonsoftJson();
 
+            //Add the Context Accessor
+            service.AddHttpContextAccessor();
 
             //configure repositories
             service.AddScoped<IBookRepository, BookRepository>();
@@ -39,7 +41,7 @@ namespace YourLibraryAPI
             service.AddScoped<IAuthorService, AuthorService>();
             service.AddScoped<IPublisherService, PublisherService>();
             service.AddScoped<IAccountService, AccountService>();
-
+            service.AddScoped<IUserService, UserService>();
 
             service.AddSwaggerGen(c =>
             {
@@ -50,7 +52,7 @@ namespace YourLibraryAPI
             //database injection
             service.AddDbContext<AppDbContext>(option =>
             {
-                option.UseSqlServer(Configuration.GetConnectionString("YourLibraryDb"));
+                option.UseSqlServer(Configuration.GetConnectionString("YourLibraryDB"));
             });
 
             //inject jwt token service
