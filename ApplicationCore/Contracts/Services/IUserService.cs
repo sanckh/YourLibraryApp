@@ -11,6 +11,6 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IUserService
     {
-        public Task<CurrentUserModel> GetCurrentUser();
+        Task<CurrentUserModel> GetCurrentUser();
     }
 }

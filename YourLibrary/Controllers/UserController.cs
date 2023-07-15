@@ -23,7 +23,7 @@ namespace YourLibrary.API.Controllers
 
         [HttpGet("current")]
         [Authorize] // Add authorization attribute to ensure only authenticated users can access this endpoint
-        public async Task<ActionResult> GetCurrentUser()
+        public async Task<IActionResult> GetCurrentUser()
         {
            // Retrieve the authenticated user's information from the JWT token's claims
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
