@@ -66,9 +66,11 @@ namespace YourLibraryAPI
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Issuer"],
+                    ValidAudience = Configuration["Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["PrivateKey"]))
                 };
             });

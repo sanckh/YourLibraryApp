@@ -1,24 +1,49 @@
 <mat-toolbar>
-  <button mat-icon-button (click)="sidenav.toggle()">
+  <button mat-icon-button (click)="toggleSidenav()" matTooltip="menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Welcome back, {{ currentUser?.firstName }} {{ currentUser?.lastName }}!</span>
+  <span>{{ currentUser?.firstName }} {{ currentUser?.lastName }}'s Library</span>
+  <span class="toolbar-item-spacer"></span>
+  <button mat-icon-button matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
+    <button mat-menu-item routerLink="/profile">
+      <mat-icon>person</mat-icon><span>My Account</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav mode="side" opened>
+<mat-sidenav-container class="app-container">
+  <mat-sidenav #sidenav mode="side" [class.mat-elevation-z4]="true" class="app-sidenav">
     <mat-nav-list>
-      <a mat-list-item routerLink="/settings">Settings</a>
-      <a mat-list-item routerLink="/profile">Profile</a>
+      <mat-list-item routerLink="/settings">
+        <mat-icon>settings</mat-icon><span>Settings</span>
+      </mat-list-item>
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+          Subscriptions
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="#">
+            <mat-icon>apple</mat-icon><span>Test Option 1</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon>android</mat-icon><span>Test Option 2</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
       <a mat-list-item routerLink="/subscription">Subscription</a>
       <a mat-list-item routerLink="/library">Your Library</a>
+      <a mat-list-item routerLink="/signout">Sign out</a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <!-- Main content -->
-    <div>
-      <!-- Your main content here -->
-    </div>
+    <router-outlet>
+      <div class="app-sidenav-content">
+        Components go here
+      </div>
+    </router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -2,6 +2,7 @@
 using ApplicationCore.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -16,11 +17,14 @@ namespace YourLibrary.API.Controllers
         private readonly IAccountService accountService;
         private readonly IUserService userService;
         private readonly IConfiguration configuration;
-        public AccountController(IAccountService _acc, IConfiguration _con, IUserService _user)
+        private readonly ILogger<UserController> logger;
+
+        public AccountController(IAccountService _acc, IConfiguration _con, IUserService _user, ILogger<UserController> logger)
         {
             accountService = _acc;
             configuration = _con;
             userService = _user;
+            this.logger = logger;
         }
 
         [HttpPost]
@@ -86,6 +90,17 @@ namespace YourLibrary.API.Controllers
                 Audience = configuration["Audience"]
             };
             var token = tokenHandler.CreateToken(tokenDescription);
+
+            // Decode the generated token to inspect the claims
+            var decodedToken = tokenHandler.ReadJwtToken(tokenHandler.WriteToken(token));
+            var userId = decodedToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var firstName = decodedToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value;
+            var lastName = decodedToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value;
+            var email = decodedToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
+            var dateOfBirth = decodedToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Birthdate)?.Value;
+
+            // Log the claims for debugging purposes
+            logger.LogInformation($"Decoded Token - UserId: {userId}, FirstName: {firstName}, LastName: {lastName}, Email: {email}, DateOfBirth: {dateOfBirth}");
 
             return tokenHandler.WriteToken(token);
         }

@@ -15,34 +15,53 @@ namespace YourLibrary.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
-
-        public UserController(IUserService userService)
+        private readonly ILogger<UserController> logger;
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             this.userService = userService;
+            this.logger = logger;
         }
 
         [HttpGet("current")]
         [Authorize] // Add authorization attribute to ensure only authenticated users can access this endpoint
-        public async Task<IActionResult> GetCurrentUser()
+        public async Task<ActionResult<CurrentUserModel>> GetCurrentUser()
         {
-           // Retrieve the authenticated user's information from the JWT token's claims
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var firstName = User.FindFirst(JwtRegisteredClaimNames.GivenName)?.Value;
-            var lastName = User.FindFirst(JwtRegisteredClaimNames.FamilyName)?.Value;
-            var email = User.FindFirst(JwtRegisteredClaimNames.Email)?.Value;
-            var dateOfBirth = User.FindFirst(JwtRegisteredClaimNames.Birthdate)?.Value;
+            var currentUserModel = await userService.GetCurrentUser();
 
-            // Create a response object with the user information
-            var currentUser = new CurrentUserModel
+            if (currentUserModel == null)
             {
-                Id = int.Parse(userId),
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                DateOfBirth = !string.IsNullOrEmpty(dateOfBirth) ? DateTime.Parse(dateOfBirth) : null
-            };
-
-            return Ok(currentUser);
-                }
+                return NotFound("User not found");
             }
+
+            return Ok(currentUserModel);
+            //// Retrieve the authenticated user's information from the JWT token's claims
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var firstName = User.FindFirstValue(JwtRegisteredClaimNames.GivenName);
+            //var lastName = User.FindFirstValue(JwtRegisteredClaimNames.FamilyName);
+            //var email = User.FindFirstValue(JwtRegisteredClaimNames.Email);
+            //var dateOfBirthClaim = User.FindFirst(JwtRegisteredClaimNames.Birthdate);
+
+            //var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            //DateTime? dateOfBirth = null;
+            //if (dateOfBirthClaim != null && DateTime.TryParse(dateOfBirthClaim.Value, out var parsedDateOfBirth))
+            //{
+            //    dateOfBirth = parsedDateOfBirth;
+            //}
+
+            //// Create a response object with the user information
+            //var currentUser = new CurrentUserModel
+            //{
+            //    Id = int.Parse(userId),
+            //    FirstName = firstName,
+            //    LastName = lastName,
+            //    Email = email,
+            //    DateOfBirth = dateOfBirth
+            //};
+
+            //logger.LogInformation($"JWT Token: {token}");
+
+            //return Ok(currentUser);
+        }
+    }
 }

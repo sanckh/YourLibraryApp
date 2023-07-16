@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {Router} from '@angular/router'
-import {MatDrawer} from '@angular/material/sidenav';
+import {MatDrawer, MatSidenav} from '@angular/material/sidenav';
 //Services
 import { UserService } from '../shared/services/user-service/user.service';
 //Models
@@ -16,17 +16,30 @@ import { CurrentUserModel } from '../shared/models/currentuser-model';
 export class HomePageComponent implements OnInit {
 
   currentUser: CurrentUserModel;
+  opened: boolean;
+
+  @ViewChild('sidenav') sidenav: MatSidenav;
+
+  events: string[] = [];
+
+  shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
   constructor(
     private router: Router,
     private userService: UserService
   ) { }
 
+  toggleSidenav() {
+    this.sidenav.toggle();
+  }
+
   initCurrentUser(): void {
     this.userService.getCurrentUser().subscribe(
       (user: CurrentUserModel) => {
         this.currentUser = user;
         console.log(this.currentUser)
+        var cookies = document.cookie;
+        console.log(cookies);
       },
       (error) => {
         console.error(error);

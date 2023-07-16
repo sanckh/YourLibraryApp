@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { CurrentUserModel } from '../../models/currentuser-model';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -19,6 +19,11 @@ export class UserService {
     const token = this.cookieService.get('jwtToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     console.log("token: ", token);
-    return this.http.get<CurrentUserModel>(this.currentUserUrl, { headers });
+    return this.http.get<CurrentUserModel>(this.currentUserUrl, { headers }).pipe(
+      catchError((error) => {
+        console.error("Error getting current user:", error);
+        throw error;
+      })
+    );
   }
 }

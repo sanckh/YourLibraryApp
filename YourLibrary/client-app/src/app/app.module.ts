@@ -3,14 +3,17 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { CookieService } from 'ngx-cookie-service';
+
+//Material
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { CookieService } from 'ngx-cookie-service';
-
-/*import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';*/
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 //Components
 import { AppComponent } from './app.component';
@@ -33,14 +36,17 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    //SweetAlert2Module.forRoot(),
-    //SweetAlert2Module.forChild(),
     ReactiveFormsModule,
     NoopAnimationsModule,
     MatSidenavModule,
     MatListModule,
     MatToolbarModule,
     MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatExpansionModule,
+    MatTooltipModule,
+  
   ],
   providers: [
     SweetAlertService,
