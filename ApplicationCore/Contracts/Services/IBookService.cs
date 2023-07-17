@@ -19,5 +19,7 @@ namespace ApplicationCore.Contracts.Services
         //new task!
         //we want to be able to insert a new book with an author. If the other exists, great. If it doesnt, we want to add the author also.
         Task<int> InsertBookWithAuthorAsync(BookWithAuthorsModel book);
+
+        Task<List<BookModel>> GetRecentlyAddedBooksAsync(int days);
     }
 }

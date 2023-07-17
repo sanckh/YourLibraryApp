@@ -81,5 +81,13 @@ namespace YourLibrary.API.Controllers
             await _bookService.InsertBookWithAuthorAsync(book);
             return Ok();
         }
+
+        [HttpGet("recentlyadded")]
+        public async Task<IActionResult> GetRecentlyAddedBooksAsync()
+        {
+            var days = 30; //Number of days for recent additions
+            var books = await _bookService.GetRecentlyAddedBooksAsync(days);
+            return Ok(books);
+        }
     }
 }

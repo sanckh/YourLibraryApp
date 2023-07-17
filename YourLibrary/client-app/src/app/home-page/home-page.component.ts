@@ -3,8 +3,10 @@ import {Router} from '@angular/router'
 import {MatDrawer, MatSidenav} from '@angular/material/sidenav';
 //Services
 import { UserService } from '../shared/services/user-service/user.service';
+import { BookService } from '../shared/services/book-service/book-service.service';
 //Models
 import { CurrentUserModel } from '../shared/models/currentuser-model';
+import { BookModel } from '../shared/models/book-model';
 
 //Components
 
@@ -17,6 +19,8 @@ export class HomePageComponent implements OnInit {
 
   currentUser: CurrentUserModel;
   opened: boolean;
+  recentlyAddedBooks: BookModel[] = [];
+
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -26,7 +30,8 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private bookService: BookService,
   ) { }
 
   toggleSidenav() {
@@ -46,8 +51,21 @@ export class HomePageComponent implements OnInit {
       }
     )
   }
+
+  initRecentlyAddedBooks(): void {
+    this.bookService.getRecentlyAddedBooks().subscribe(
+      (books: BookModel[]) => {
+        this.recentlyAddedBooks = books;
+      },
+      (error) => {
+        console.error('Failed to get recently added books: ', error);
+    }
+    );
+  }
+
   ngOnInit(): void {
     this.initCurrentUser();
+    this.initRecentlyAddedBooks();
   }
 
 }

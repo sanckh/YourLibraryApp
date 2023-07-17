@@ -43,6 +43,15 @@
     <router-outlet>
       <div class="app-sidenav-content">
         Components go here
+        <div>
+          <h2>Recently Added: </h2>
+          <ul>
+            <li *ngFor="let book of recentlyAddedBooks">
+              <h3>{{book.title}}</h3>
+              <p>{{book.description}}</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </router-outlet>
   </mat-sidenav-content>

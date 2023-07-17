@@ -157,5 +157,29 @@ namespace Infrastructure.Services
             //dont forget to save!
             return await _bookRepository.SaveChangesAsync();
         }
+
+        public async Task<List<BookModel>> GetRecentlyAddedBooksAsync(int days)
+        {
+            var startDate = DateTime.UtcNow.AddDays(-days);
+            var books = await _bookRepository.GetAllAsync();
+
+            var recentlyAddedBooks = books
+                .Where(b => b.DateAdded >= startDate)
+                .Select(b => new BookModel
+                {
+                    Title = b.Title,
+                    Description = b.Description,
+                    Genre = b.Genre,
+                    isRead = b.isRead,
+                    DateRead = b.DateRead,
+                    Rating = b.Rating,
+                    CoverUrl = b.CoverUrl,
+                    DateAdded = b.DateAdded,
+                })
+                .ToList();
+
+            return recentlyAddedBooks;
+        }
+
     }
 }
