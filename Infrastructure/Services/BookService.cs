@@ -81,27 +81,35 @@ namespace Infrastructure.Services
             };
         }
 
-        public async Task<Book> UpdateBookByIdAsync(int bookId, BookModel book)
+        public async Task<Book> UpdateBookByIdAsync(int bookId, int userId, BookModel updatedBook)
         {
-            var books = await _bookRepository.GetAllAsync();
-            var _book = books.FirstOrDefault(n => n.Id == bookId);
+            var userBook = await _bookRepository.GetUserBookAsync(bookId, userId);
 
-            if (_book == null)
+            if (userBook == null)
                 throw new ArgumentException("Book not found");
 
-            if (_book != null)
+            if (userBook != null)
             {
-                _book.Title = book.Title;
-                _book.Description = book.Description;
-                _book.DateRead = book.isRead ? book.DateRead.Value : null;
-                _book.Genre = book.Genre;
-                _book.isRead = book.isRead;
-                _book.Rating = book.isRead ? book.Rating.Value : null;
-                _book.CoverUrl = book.CoverUrl;
+                userBook.Book.isRead = updatedBook.isRead;
+                userBook.Book.DateRead = updatedBook.DateRead;
+                userBook.Book.Rating = updatedBook.Rating;
 
                 await _bookRepository.SaveChangesAsync();
             }
-            return _book;
+
+            var bookModel = new BookModel
+            {
+                Title = userBook.Book.Title,
+                Description = userBook.Book.Description,
+                Genre = userBook.Book.Genre,
+                isRead = userBook.Book.isRead,
+                DateRead = userBook.Book.DateRead,
+                Rating = userBook.Book.Rating,
+                CoverUrl = userBook.Book.CoverUrl,
+                DateAdded = userBook.Book.DateAdded
+            };
+
+            return bookModel;
         }
 
         public async Task<BookWithAuthorsModel> GetBookByIdAsync(int bookId)

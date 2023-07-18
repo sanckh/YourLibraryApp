@@ -13,7 +13,7 @@ namespace ApplicationCore.Contracts.Services
     {
         Task<PagedResult<BookModel>> GetAllBooksAsync(int pageNumber, int pageSize, int userId, string sortColumn, SortDirection sortDirection);
         Task<int> DeleteBookAsync(int userId, int bookId);
-        Task<Book> UpdateBookByIdAsync(int bookId, BookModel model);
+        Task<Book> UpdateBookByIdAsync(int bookId, int userId, BookModel updatedBook);
         Task<BookWithAuthorsModel> GetBookByIdAsync(int bookId);
 
         //new task!
