@@ -81,36 +81,38 @@ namespace Infrastructure.Services
             };
         }
 
-        public async Task<Book> UpdateBookByIdAsync(int bookId, int userId, BookModel updatedBook)
+        public async Task<BookModel> UpdateBookAsync(int bookId, int userId, BookModel updatedBook)
         {
             var userBook = await _bookRepository.GetUserBookAsync(bookId, userId);
 
-            if (userBook == null)
-                throw new ArgumentException("Book not found");
-
             if (userBook != null)
             {
+                // Update only the allowed fields
                 userBook.Book.isRead = updatedBook.isRead;
                 userBook.Book.DateRead = updatedBook.DateRead;
                 userBook.Book.Rating = updatedBook.Rating;
 
                 await _bookRepository.SaveChangesAsync();
+
+                // Map the updated book to a BookModel and return
+                var bookModel = new BookModel
+                {
+                    Title = userBook.Book.Title,
+                    Description = userBook.Book.Description,
+                    Genre = userBook.Book.Genre,
+                    isRead = userBook.Book.isRead,
+                    DateRead = userBook.Book.DateRead,
+                    Rating = userBook.Book.Rating,
+                    CoverUrl = userBook.Book.CoverUrl,
+                    DateAdded = userBook.Book.DateAdded
+                };
+
+                return bookModel;
             }
 
-            var bookModel = new BookModel
-            {
-                Title = userBook.Book.Title,
-                Description = userBook.Book.Description,
-                Genre = userBook.Book.Genre,
-                isRead = userBook.Book.isRead,
-                DateRead = userBook.Book.DateRead,
-                Rating = userBook.Book.Rating,
-                CoverUrl = userBook.Book.CoverUrl,
-                DateAdded = userBook.Book.DateAdded
-            };
-
-            return bookModel;
+            return null; // Indicate that the book was not found or not owned by the user
         }
+
 
         public async Task<BookWithAuthorsModel> GetBookByIdAsync(int bookId)
         {
