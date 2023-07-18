@@ -28,6 +28,16 @@ namespace Infrastructure.Data
                 .HasOne(b => b.Author)
                 .WithMany(ba => ba.Book_Authors)
                 .HasForeignKey(bi => bi.AuthorId);
+
+            modelBuilder.Entity<UserBook>()
+               .HasOne(ub => ub.User)
+               .WithMany(u => u.UserBooks)
+               .HasForeignKey(ub => ub.UserId);
+
+            modelBuilder.Entity<UserBook>()
+                .HasOne(ub => ub.Book)
+                .WithMany(b => b.UserBooks)
+                .HasForeignKey(ub => ub.BookId);
         }
 
         //Db Tables
@@ -38,5 +48,6 @@ namespace Infrastructure.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<UserBook> UserBooks { get; set; }
     }
 }

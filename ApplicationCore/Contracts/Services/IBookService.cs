@@ -11,8 +11,8 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IBookService
     {
-        Task<PagedResult<BookModel>> GetAllBooksAsync(int pageNumber, int pageSize, string sortColumn, SortDirection sortDirection);
-        Task<int> DeleteBookAsync(int id);
+        Task<PagedResult<BookModel>> GetAllBooksAsync(int pageNumber, int pageSize, int userId, string sortColumn, SortDirection sortDirection);
+        Task<int> DeleteBookAsync(int userId, int bookId);
         Task<Book> UpdateBookByIdAsync(int bookId, BookModel model);
         Task<BookWithAuthorsModel> GetBookByIdAsync(int bookId);
 

@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
 namespace Infrastructure.Services
 {
     public class BookService : IBookService
@@ -25,27 +24,41 @@ namespace Infrastructure.Services
             _authorRepository = authorRepository;
             _authorService = authorService;
         }
-        public async Task<int> DeleteBookAsync(int id)
+        public async Task<int> DeleteBookAsync(int id, int userId)
         {
-            var entity = await _bookRepository.DeleteAsync(id);
-            return entity.Id;
+            var userBook = await _bookRepository.GetUserBookAsync(id, userId);
+
+            if(userBook != null)
+            {
+                var deletedBook = await _bookRepository.DeleteAsync(userBook.Id);
+                return deletedBook.Id;
+            }
+
+            //Lazy answer. Fix this later
+            return 0;
         }
 
-        public async Task<PagedResult<BookModel>> GetAllBooksAsync(int pageNumber, int pageSize, string sortColumn, SortDirection sortDirection)
+        public async Task<PagedResult<BookModel>> GetAllBooksAsync(
+            int pageNumber, 
+            int pageSize, 
+            int userId,
+            string sortColumn, 
+            SortDirection sortDirection)
         {
-            var books = await _bookRepository.GetAllAsync();
+            //var books = await _bookRepository.GetAllAsync();
+            var userBooks = await _bookRepository.GetAllBooksByUserIdAsync(userId);
 
-            var totalCount = books.Count();
+            var totalCount = userBooks.Count();
 
             //Apply sorting
-            books = sortDirection == SortDirection.Ascending
-                    ? books.OrderBy(b => b.GetType().GetProperty(sortColumn).GetValue(b))
-                    : books.OrderByDescending(b => b.GetType().GetProperty(sortColumn).GetValue(b));
+            var sortedBooks = sortDirection == SortDirection.Ascending
+                    ? userBooks.OrderBy(b => b.GetType().GetProperty(sortColumn).GetValue(b))
+                    : userBooks.OrderByDescending(b => b.GetType().GetProperty(sortColumn).GetValue(b));
 
             // Apply pagination
-            books = books.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            var pagedBooks = sortedBooks.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-            var bookModels = books.Select(b => new BookModel
+            var bookModels = pagedBooks.Select(b => new BookModel
             {
                 Title = b.Title,
                 Description = b.Description,

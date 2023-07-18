@@ -10,5 +10,8 @@ namespace ApplicationCore.Contracts.Repository
     public interface IBookRepository:IRepository<Book>
     {
         //Task<Book> GetAllBooks(int id);
+        Task<UserBook> GetUserBookAsync(int userId, int bookId);
+        Task DeleteUserBookAsync(UserBook userBook);
+        Task<IEnumerable<Book>> GetAllBooksByUserIdAsync(int userId);
     }
 }
