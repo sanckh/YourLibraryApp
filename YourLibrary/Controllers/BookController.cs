@@ -25,9 +25,9 @@ namespace YourLibrary.API.Controllers
         }
 
         [HttpGet("GetAllBooks")]
-        public async Task<ActionResult<IEnumerable<BookModel>>> GetAllBooksAsync(int pageNumber = 1, int pageSize = 10, string sortColumn = "Title", SortDirection sortDirection = SortDirection.Ascending)
+        public async Task<ActionResult<IEnumerable<BookModel>>> GetAllBooksAsync(int pageNumber, int pageSize, int userId, string sortColumn, SortDirection sortDirection)
         {
-            var books = await _bookService.GetAllBooksAsync(pageNumber, pageSize, sortColumn, sortDirection);
+            var books = await _bookService.GetAllBooksAsync(pageNumber, pageSize, userId, sortColumn, sortDirection);
             return Ok(books);
         }
 
@@ -40,17 +40,17 @@ namespace YourLibrary.API.Controllers
         }
 
         [HttpPut("UpdateBookAsync/{id}")]
-        public async Task<ActionResult> UpdateBookByIdAsync(int id, BookModel book)
+        public async Task<ActionResult> UpdateBookByIdAsync(int bookId, int userId, BookModel book)
         {
 
-            var updatedBook = _bookService.UpdateBookByIdAsync(id, book);
+            var updatedBook = _bookService.UpdateBookAsync(bookId, userId, book);
 
             return Ok(updatedBook);
         }
         [HttpDelete("DeleteBookAsync/{id}")]
-        public async Task<ActionResult> DeleteBookAsync(int id)
+        public async Task<ActionResult> DeleteBookAsync(int userId, int bookId)
         {
-            var result = await _bookService.DeleteBookAsync(id);
+            var result = await _bookService.DeleteBookAsync(userId, bookId);
             if(result == 0)
             {
                 return NotFound();
@@ -83,10 +83,10 @@ namespace YourLibrary.API.Controllers
         }
 
         [HttpGet("recentlyadded")]
-        public async Task<IActionResult> GetRecentlyAddedBooksAsync()
+        public async Task<IActionResult> GetRecentlyAddedBooksAsync(int userId)
         {
             var days = 30; //Number of days for recent additions
-            var books = await _bookService.GetRecentlyAddedBooksAsync(days);
+            var books = await _bookService.GetRecentlyAddedBooksAsync(days, userId);
             return Ok(books);
         }
     }

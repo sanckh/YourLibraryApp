@@ -85,32 +85,32 @@ namespace Infrastructure.Services
         {
             var userBook = await _bookRepository.GetUserBookAsync(bookId, userId);
 
-            if (userBook != null)
+            if (userBook == null)
             {
-                // Update only the allowed fields
-                userBook.Book.isRead = updatedBook.isRead;
-                userBook.Book.DateRead = updatedBook.DateRead;
-                userBook.Book.Rating = updatedBook.Rating;
-
-                await _bookRepository.SaveChangesAsync();
-
-                // Map the updated book to a BookModel and return
-                var bookModel = new BookModel
-                {
-                    Title = userBook.Book.Title,
-                    Description = userBook.Book.Description,
-                    Genre = userBook.Book.Genre,
-                    isRead = userBook.Book.isRead,
-                    DateRead = userBook.Book.DateRead,
-                    Rating = userBook.Book.Rating,
-                    CoverUrl = userBook.Book.CoverUrl,
-                    DateAdded = userBook.Book.DateAdded
-                };
-
-                return bookModel;
+                throw new ArgumentException("Book not found!");
             }
 
-            return null; // Indicate that the book was not found or not owned by the user
+            // Update only the allowed fields
+            userBook.Book.isRead = updatedBook.isRead;
+            userBook.Book.DateRead = updatedBook.DateRead;
+            userBook.Book.Rating = updatedBook.Rating;
+
+            await _bookRepository.SaveChangesAsync();
+
+            // Map the updated book to a BookModel and return
+            var bookModel = new BookModel
+            {
+                Title = userBook.Book.Title,
+                Description = userBook.Book.Description,
+                Genre = userBook.Book.Genre,
+                isRead = userBook.Book.isRead,
+                DateRead = userBook.Book.DateRead,
+                Rating = userBook.Book.Rating,
+                CoverUrl = userBook.Book.CoverUrl,
+                DateAdded = userBook.Book.DateAdded
+            };
+
+            return bookModel; // Indicate that the book was not found or not owned by the user
         }
 
 
@@ -138,13 +138,15 @@ namespace Infrastructure.Services
 
             if (_book == null)
             {
-                throw new ArgumentException("Book not found");
+                throw new ArgumentException("Unable to update");
             }
 
             return _book;
         }
 
         //now in the service level, let's create the logic behind that idea
+        //update 07/2023 - this may be a deprecated method because I am going to use
+        // an api to retrieve all book information
         public async Task<int> InsertBookWithAuthorAsync(BookWithAuthorsModel book)
         {
             //lets get our authors
@@ -181,10 +183,10 @@ namespace Infrastructure.Services
             return await _bookRepository.SaveChangesAsync();
         }
 
-        public async Task<List<BookModel>> GetRecentlyAddedBooksAsync(int days)
+        public async Task<List<BookModel>> GetRecentlyAddedBooksAsync(int days, int userId)
         {
             var startDate = DateTime.UtcNow.AddDays(-days);
-            var books = await _bookRepository.GetAllAsync();
+            var books = await _bookRepository.GetAllBooksByUserIdAsync(userId);
 
             var recentlyAddedBooks = books
                 .Where(b => b.DateAdded >= startDate)
