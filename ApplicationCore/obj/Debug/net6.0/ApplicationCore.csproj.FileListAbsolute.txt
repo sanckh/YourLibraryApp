@@ -25,3 +25,4 @@ C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\obj\Debug\net6
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\obj\Debug\net6.0\ApplicationCore.pdb
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\obj\Debug\net6.0\ApplicationCore.genruntimeconfig.cache
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\obj\Debug\net6.0\ref\ApplicationCore.dll
+C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.csproj.AssemblyReference.cache

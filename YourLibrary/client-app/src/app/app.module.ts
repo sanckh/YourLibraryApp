@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { SweetAlertService } from './shared/services/sweetalert.service';
 import { RegistrationModalComponent } from './shared/components/registration-modal/registration-modal.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { GoogleBookListComponent } from './shared/components/google-book-list/google-book-list.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     HomePageComponent,
     LoginComponent,
     RegistrationModalComponent,
+    GoogleBookListComponent
     
   ],
   imports: [

@@ -42,6 +42,10 @@ namespace YourLibraryAPI
             service.AddScoped<IPublisherService, PublisherService>();
             service.AddScoped<IAccountService, AccountService>();
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<IGoogleBooksService, GoogleBooksService>();
+
+            //API Service(s)
+            service.AddHttpClient<GoogleBooksService>();
 
             service.AddSwaggerGen(c =>
             {

@@ -13,6 +13,7 @@ namespace YourLibrary.API.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
+        //TODO: Rename this controller to UserBooksController.cs -- This Controller will be dealing with the books in the users library and shelves. 
         private readonly IBookService _bookService;
         private readonly IAuthorService _authorService;
         private readonly IAuthorRepository _authorRepository;

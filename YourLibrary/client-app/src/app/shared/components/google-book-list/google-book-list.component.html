@@ -1,0 +1,11 @@
+<div>
+  <form (submit)="searchBooks()">
+    <input [(ngModel)]="query" name="query" placeholder="Search for a book!">
+    <button type="submit">Search</button>
+  </form>
+</div>
+<div *ngIf="books">
+  <div *ngFor="let books of books">
+    {{books.volumeInfo?.title}}
+  </div>
+</div>

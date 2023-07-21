@@ -10,6 +10,7 @@
     <None Remove="client-app\src\app\shared\models\author-model.ts" />
     <None Remove="client-app\src\app\shared\models\auth\userregisterrequestmodel.ts" />
     <None Remove="client-app\src\app\shared\models\book-model.ts" />
+    <None Remove="client-app\src\app\shared\models\booksearchresponsemodel.ts" />
     <None Remove="client-app\src\app\shared\models\UserLoginRequestModel.ts" />
   </ItemGroup>
 
@@ -36,7 +37,7 @@
 
   <ItemGroup>
     <Folder Include="client-app\src\app\login\forms\" />
-    <Folder Include="client-app\src\app\shared\components\" />
+    <Folder Include="client-app\src\app\shared\components\google-books\" />
     <Folder Include="client-app\src\app\shared\services\book-service\" />
     <Folder Include="client-app\src\app\shared\services\author-service\" />
   </ItemGroup>
