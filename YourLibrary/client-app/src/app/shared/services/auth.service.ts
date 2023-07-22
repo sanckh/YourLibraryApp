@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router'
+import jwt_decode from 'jwt-decode';
+
 
 
 //Models
@@ -19,7 +22,9 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private router: Router,
+  ) { }
 
   login(loginRequest: UserLoginRequestModel): Observable<any> {
     return this.http.post<any>(this.loginUrl, loginRequest).pipe(
@@ -43,9 +48,42 @@ export class AuthService {
     );
   }
 
+  logout(): void {
+    this.cookieService.delete('jwtToken');
+    this.router.navigateByUrl('/login');
+  }
+
   getTokenFromCookie(): string {
     return this.cookieService.get('jwtToken');
   }
+
+  isAuthenticated(): boolean {
+    const token = this.cookieService.get('jwtToken');
+
+    if (!token) {
+      return false;
+    }
+
+    // Try to decode the token and check its expiry date.
+    try {
+      const decodedToken = jwt_decode<{ exp: number }>(token);
+      const expirationDate = decodedToken.exp * 1000; // Convert to milliseconds.
+      const now = new Date().getTime(); // Current time in milliseconds.
+
+      // If current date is greater than the expiration date, the token is expired.
+      if (now > expirationDate) {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+
+    // If we got this far, the token exists and hasn't expired.
+    return true;
+  }
+
+
+
 
 
 }

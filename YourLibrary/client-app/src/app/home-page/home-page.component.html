@@ -35,23 +35,30 @@
       </mat-expansion-panel>
       <a mat-list-item routerLink="/subscription">Subscription</a>
       <a mat-list-item routerLink="/library">Your Library</a>
-      <a mat-list-item routerLink="/signout">Sign out</a>
+      <a mat-list-item (click)="onLogoutClicked()">Sign out</a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <router-outlet>
       <div class="app-sidenav-content">
-        Components go here
-        <app-google-book-list></app-google-book-list>
         <div>
           <h2>Recently Added: </h2>
-          <ul>
-            <li *ngFor="let book of recentlyAddedBooks">
-              <h3>{{book.title}}</h3>
+          <mat-card *ngFor="let book of recentlyAddedBooks" class="book-card">
+            <mat-card-header>
+              <mat-card-title>{{book.title}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
               <p>{{book.description}}</p>
-            </li>
-          </ul>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button>LIKE</button>
+              <button mat-button>SHARE</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div>
+          <app-google-book-list class="searchResults"></app-google-book-list>
         </div>
       </div>
     </router-outlet>

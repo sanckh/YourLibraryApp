@@ -1,11 +1,15 @@
-<div>
-  <form (submit)="searchBooks()">
-    <input [(ngModel)]="query" name="query" placeholder="Search for a book!">
-    <button type="submit">Search</button>
+<div class="container mt-4">
+  <form (submit)="searchBooks()" class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="search" [(ngModel)]="query" name="query" placeholder="Search for a book!" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
-</div>
-<div *ngIf="books">
-  <div *ngFor="let books of books">
-    {{books.volumeInfo?.title}}
+  <div *ngIf="books" class="mt-4">
+    <div *ngFor="let book of books" class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{book.volumeInfo?.title}}</h5>
+        <p class="card-text">{{book.volumeInfo?.description}}</p>
+        <a [href]="book.volumeInfo?.infoLink" class="btn btn-primary" target="_blank">More info</a>
+      </div>
+    </div>
   </div>
 </div>

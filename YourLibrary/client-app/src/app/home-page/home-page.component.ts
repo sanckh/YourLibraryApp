@@ -4,6 +4,7 @@ import {MatDrawer, MatSidenav} from '@angular/material/sidenav';
 //Services
 import { UserService } from '../shared/services/user-service/user.service';
 import { BookService } from '../shared/services/book-service/book-service.service';
+import { AuthService } from '../shared/services/auth.service'
 //Models
 import { CurrentUserModel } from '../shared/models/currentuser-model';
 import { BookModel } from '../shared/models/book-model';
@@ -32,6 +33,7 @@ export class HomePageComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private bookService: BookService,
+    private authService: AuthService,
   ) { }
 
   toggleSidenav() {
@@ -61,6 +63,10 @@ export class HomePageComponent implements OnInit {
         console.error('Failed to get recently added books: ', error);
     }
     );
+  }
+
+  onLogoutClicked(): void {
+    this.authService.logout();
   }
 
   ngOnInit(): void {
