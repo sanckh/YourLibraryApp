@@ -15,6 +15,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 //Components
 import { AppComponent } from './app.component';
@@ -49,7 +51,9 @@ import { GoogleBookListComponent } from './shared/components/google-book-list/go
     MatMenuModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatCardModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [
     SweetAlertService,

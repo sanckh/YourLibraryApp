@@ -2,39 +2,39 @@
   <div class="modal-content">
     <h2 class="modal-title">Registration</h2>
     <form [formGroup]="formGroup" class="registration-form">
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" class="form-control" formControlName="email">
-        <div class="error-message">{{ getErrorMessage('email') }}</div>
-      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Email:</mat-label>
+        <input matInput type="email" formControlName="email">
+      </mat-form-field>
+      <div class="error-message">{{ getErrorMessage('email') }}</div>
 
-      <div class="form-group">
-        <label>Password:</label>
-        <input type="password" class="form-control" formControlName="password">
-      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Password:</mat-label>
+        <input matInput type="password" formControlName="password">
+      </mat-form-field>
 
-      <div class="form-group">
-        <label>First Name:</label>
-        <input type="text" class="form-control" formControlName="firstName">
-      </div>
--
-      <div class="form-group">
-        <label>Last Name:</label>
-        <input type="text" class="form-control" formControlName="lastName">
-      </div>
-      
+      <mat-form-field appearance="fill">
+        <mat-label>First Name:</mat-label>
+        <input matInput type="text" formControlName="firstName">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name:</mat-label>
+        <input matInput type="text" formControlName="lastName">
+      </mat-form-field>
+
       <div>
         <small class="text-muted">Optional:</small>
       </div>
 
-      <div class="form-group">
-        <label>Date of Birth:</label>
-        <input type="date" class="form-control" formControlName="dateOfBirth">
-      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Date of Birth:</mat-label>
+        <input matInput type="date" formControlName="dateOfBirth">
+      </mat-form-field>
 
       <div class="buttons">
-        <button type="button" class="btn btn-secondary" (click)="onCloseClicked()">Close</button>
-        <button type="button" class="btn btn-primary" [disabled]="!canSave" (click)="onRegisterClicked()">Register</button>
+        <button mat-raised-button color="accent" (click)="onCloseClicked()">Close</button>
+        <button mat-raised-button color="primary" [disabled]="!canSave" (click)="onRegisterClicked()">Register</button>
       </div>
     </form>
   </div>

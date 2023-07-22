@@ -1,4 +1,3 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .toolbar-item-spacer {
   flex: 1 1 auto;
@@ -20,5 +19,5 @@
   justify-content: center;
 }
 .search-results{
-    margin-top: 50x;
+    margin-top: 50px;
 }
