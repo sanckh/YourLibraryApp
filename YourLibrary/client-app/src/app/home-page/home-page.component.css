@@ -1,23 +1,16 @@
 
-.toolbar-item-spacer {
-  flex: 1 1 auto;
-}
 
-.app-container {
-  height: 90%;
-  margin: 0;
-}
-
-.app-sidenav {
-  width: 230px;
-}
-
-.app-sidenav-content {
+.scrollable-row {
   display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
-.search-results{
-    margin-top: 50px;
+
+.book-card, .list-card {
+  flex: 0 0 auto;
+  margin: 10px;
+}
+
+h2 {
+  margin-top: 20px;
 }

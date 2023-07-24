@@ -20,14 +20,17 @@ export class HomePageComponent implements OnInit {
 
   currentUser: CurrentUserModel;
   opened: boolean;
-  recentlyAddedBooks: BookModel[] = [];
+
+  //Placeholder:
+  //recentlyAddedBooks: BookModel[] = [];
+  recentlyAddedBooks: any[] = [];
+  userLists: any[] = [];
+  recommendedBooks: any[] = [];
 
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   events: string[] = [];
-
-  shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
   constructor(
     private router: Router,
@@ -35,6 +38,39 @@ export class HomePageComponent implements OnInit {
     private bookService: BookService,
     private authService: AuthService,
   ) { }
+
+//PlaceHolderData!
+
+
+  initRecentlyAddedBooks(): void {
+    // Get the recently added books from your service here
+    // Placeholder data for demonstration
+    this.recentlyAddedBooks = [
+      { title: 'Book 1', description: 'Description 1' },
+      { title: 'Book 2', description: 'Description 2' },
+      { title: 'Book 3', description: 'Description 3' }
+    ];
+  }
+
+  initUserLists(): void {
+    // Get the user's lists from your service here
+    // Placeholder data for demonstration
+    this.userLists = [
+      { title: 'List 1', description: 'Description 1' },
+      { title: 'List 2', description: 'Description 2' },
+      { title: 'List 3', description: 'Description 3' }
+    ];
+  }
+
+  initRecommendedBooks(): void {
+    // Get the recommended books from your service here
+    // Placeholder data for demonstration
+    this.recommendedBooks = [
+      { title: 'Book 4', description: 'Description 4' },
+      { title: 'Book 5', description: 'Description 5' },
+      { title: 'Book 6', description: 'Description 6' }
+    ];
+  }
 
   toggleSidenav() {
     this.sidenav.toggle();
@@ -54,24 +90,22 @@ export class HomePageComponent implements OnInit {
     )
   }
 
-  initRecentlyAddedBooks(): void {
-    this.bookService.getRecentlyAddedBooks().subscribe(
-      (books: BookModel[]) => {
-        this.recentlyAddedBooks = books;
-      },
-      (error) => {
-        console.error('Failed to get recently added books: ', error);
-    }
-    );
-  }
-
-  onLogoutClicked(): void {
-    this.authService.logout();
-  }
+  //initRecentlyAddedBooks(): void {
+  //  this.bookService.getRecentlyAddedBooks().subscribe(
+  //    (books: BookModel[]) => {
+  //      this.recentlyAddedBooks = books;
+  //    },
+  //    (error) => {
+  //      console.error('Failed to get recently added books: ', error);
+  //  }
+  //  );
+  //}
 
   ngOnInit(): void {
     this.initCurrentUser();
     this.initRecentlyAddedBooks();
+    this.initUserLists();
+    this.initRecommendedBooks();
   }
 
 }
