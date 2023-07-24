@@ -190,6 +190,29 @@ namespace Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.UserBook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBooks");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.UserRole", b =>
                 {
                     b.Property<int>("Id")
@@ -241,6 +264,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("Book");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.UserBook", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.Book", "Book")
+                        .WithMany("UserBooks")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationCore.Entities.User", "User")
+                        .WithMany("UserBooks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.UserRole", b =>
                 {
                     b.HasOne("ApplicationCore.Entities.Role", "Role")
@@ -268,6 +310,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("ApplicationCore.Entities.Book", b =>
                 {
                     b.Navigation("Book_Authors");
+
+                    b.Navigation("UserBooks");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Publisher", b =>
@@ -282,6 +326,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationCore.Entities.User", b =>
                 {
+                    b.Navigation("UserBooks");
+
                     b.Navigation("UserName");
                 });
 #pragma warning restore 612, 618

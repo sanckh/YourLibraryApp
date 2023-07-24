@@ -25,6 +25,8 @@ namespace YourLibraryAPI
             service.AddControllers();
             service.AddControllers().AddNewtonsoftJson();
 
+            //Add the Context Accessor
+            service.AddHttpContextAccessor();
 
             //configure repositories
             service.AddScoped<IBookRepository, BookRepository>();
@@ -39,7 +41,11 @@ namespace YourLibraryAPI
             service.AddScoped<IAuthorService, AuthorService>();
             service.AddScoped<IPublisherService, PublisherService>();
             service.AddScoped<IAccountService, AccountService>();
+            service.AddScoped<IUserService, UserService>();
+            service.AddScoped<IGoogleBooksService, GoogleBooksService>();
 
+            //API Service(s)
+            service.AddHttpClient<GoogleBooksService>();
 
             service.AddSwaggerGen(c =>
             {
@@ -50,7 +56,7 @@ namespace YourLibraryAPI
             //database injection
             service.AddDbContext<AppDbContext>(option =>
             {
-                option.UseSqlServer(Configuration.GetConnectionString("YourLibraryDb"));
+                option.UseSqlServer(Configuration.GetConnectionString("YourLibraryDB"));
             });
 
             //inject jwt token service
@@ -64,11 +70,24 @@ namespace YourLibraryAPI
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Issuer"],
+                    ValidAudience = Configuration["Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["PrivateKey"]))
                 };
+            });
+
+            //adding CORS Middleware
+            service.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
             });
 
 
@@ -85,6 +104,7 @@ namespace YourLibraryAPI
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YourLibrary v1"));
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAnyOrigin");
 
             app.UseRouting();
             app.UseAuthentication();
@@ -95,6 +115,7 @@ namespace YourLibraryAPI
             {
                 endpoints.MapControllers();
             });
+
 
             //AppDbInitializer.Seed(app);
 

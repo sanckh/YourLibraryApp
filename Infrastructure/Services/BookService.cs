@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
 namespace Infrastructure.Services
 {
     public class BookService : IBookService
@@ -25,27 +24,41 @@ namespace Infrastructure.Services
             _authorRepository = authorRepository;
             _authorService = authorService;
         }
-        public async Task<int> DeleteBookAsync(int id)
+        public async Task<int> DeleteBookAsync(int id, int userId)
         {
-            var entity = await _bookRepository.DeleteAsync(id);
-            return entity.Id;
+            var userBook = await _bookRepository.GetUserBookAsync(id, userId);
+
+            if(userBook != null)
+            {
+                var deletedBook = await _bookRepository.DeleteAsync(userBook.Id);
+                return deletedBook.Id;
+            }
+
+            //Lazy answer. Fix this later
+            return 0;
         }
 
-        public async Task<PagedResult<BookModel>> GetAllBooksAsync(int pageNumber, int pageSize, string sortColumn, SortDirection sortDirection)
+        public async Task<PagedResult<BookModel>> GetAllBooksAsync(
+            int pageNumber, 
+            int pageSize, 
+            int userId,
+            string sortColumn, 
+            SortDirection sortDirection)
         {
-            var books = await _bookRepository.GetAllAsync();
+            //var books = await _bookRepository.GetAllAsync();
+            var userBooks = await _bookRepository.GetAllBooksByUserIdAsync(userId);
 
-            var totalCount = books.Count();
+            var totalCount = userBooks.Count();
 
             //Apply sorting
-            books = sortDirection == SortDirection.Ascending
-                    ? books.OrderBy(b => b.GetType().GetProperty(sortColumn).GetValue(b))
-                    : books.OrderByDescending(b => b.GetType().GetProperty(sortColumn).GetValue(b));
+            var sortedBooks = sortDirection == SortDirection.Ascending
+                    ? userBooks.OrderBy(b => b.GetType().GetProperty(sortColumn).GetValue(b))
+                    : userBooks.OrderByDescending(b => b.GetType().GetProperty(sortColumn).GetValue(b));
 
             // Apply pagination
-            books = books.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            var pagedBooks = sortedBooks.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-            var bookModels = books.Select(b => new BookModel
+            var bookModels = pagedBooks.Select(b => new BookModel
             {
                 Title = b.Title,
                 Description = b.Description,
@@ -68,28 +81,38 @@ namespace Infrastructure.Services
             };
         }
 
-        public async Task<Book> UpdateBookByIdAsync(int bookId, BookModel book)
+        public async Task<BookModel> UpdateBookAsync(int bookId, int userId, BookModel updatedBook)
         {
-            var books = await _bookRepository.GetAllAsync();
-            var _book = books.FirstOrDefault(n => n.Id == bookId);
+            var userBook = await _bookRepository.GetUserBookAsync(bookId, userId);
 
-            if (_book == null)
-                throw new ArgumentException("Book not found");
-
-            if (_book != null)
+            if (userBook == null)
             {
-                _book.Title = book.Title;
-                _book.Description = book.Description;
-                _book.DateRead = book.isRead ? book.DateRead.Value : null;
-                _book.Genre = book.Genre;
-                _book.isRead = book.isRead;
-                _book.Rating = book.isRead ? book.Rating.Value : null;
-                _book.CoverUrl = book.CoverUrl;
-
-                await _bookRepository.SaveChangesAsync();
+                throw new ArgumentException("Book not found!");
             }
-            return _book;
+
+            // Update only the allowed fields
+            userBook.Book.isRead = updatedBook.isRead;
+            userBook.Book.DateRead = updatedBook.DateRead;
+            userBook.Book.Rating = updatedBook.Rating;
+
+            await _bookRepository.SaveChangesAsync();
+
+            // Map the updated book to a BookModel and return
+            var bookModel = new BookModel
+            {
+                Title = userBook.Book.Title,
+                Description = userBook.Book.Description,
+                Genre = userBook.Book.Genre,
+                isRead = userBook.Book.isRead,
+                DateRead = userBook.Book.DateRead,
+                Rating = userBook.Book.Rating,
+                CoverUrl = userBook.Book.CoverUrl,
+                DateAdded = userBook.Book.DateAdded
+            };
+
+            return bookModel; // Indicate that the book was not found or not owned by the user
         }
+
 
         public async Task<BookWithAuthorsModel> GetBookByIdAsync(int bookId)
         {
@@ -115,13 +138,15 @@ namespace Infrastructure.Services
 
             if (_book == null)
             {
-                throw new ArgumentException("Book not found");
+                throw new ArgumentException("Unable to update");
             }
 
             return _book;
         }
 
         //now in the service level, let's create the logic behind that idea
+        //update 07/2023 - this may be a deprecated method because I am going to use
+        // an api to retrieve all book information
         public async Task<int> InsertBookWithAuthorAsync(BookWithAuthorsModel book)
         {
             //lets get our authors
@@ -157,5 +182,29 @@ namespace Infrastructure.Services
             //dont forget to save!
             return await _bookRepository.SaveChangesAsync();
         }
+
+        public async Task<List<BookModel>> GetRecentlyAddedBooksAsync(int days, int userId)
+        {
+            var startDate = DateTime.UtcNow.AddDays(-days);
+            var books = await _bookRepository.GetAllBooksByUserIdAsync(userId);
+
+            var recentlyAddedBooks = books
+                .Where(b => b.DateAdded >= startDate)
+                .Select(b => new BookModel
+                {
+                    Title = b.Title,
+                    Description = b.Description,
+                    Genre = b.Genre,
+                    isRead = b.isRead,
+                    DateRead = b.DateRead,
+                    Rating = b.Rating,
+                    CoverUrl = b.CoverUrl,
+                    DateAdded = b.DateAdded,
+                })
+                .ToList();
+
+            return recentlyAddedBooks;
+        }
+
     }
 }

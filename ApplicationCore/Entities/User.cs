@@ -24,6 +24,9 @@ namespace ApplicationCore.Entities
         //public List<Review> UserReview { get; set; }
         //public List<Favorite> UserFavorite { get; set; }
         //public List<Purchase> UserPurchase { get; set; }
+
+        //Navigation Props
         public List<UserRole> UserName { get; set; }
+        public List<UserBook> UserBooks { get; set; }
     }
 }
