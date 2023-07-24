@@ -1,69 +1,55 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="client-app\src\app\shared\models\author-model.ts" />
-    <None Remove="client-app\src\app\shared\models\auth\userregisterrequestmodel.ts" />
-    <None Remove="client-app\src\app\shared\models\book-model.ts" />
-    <None Remove="client-app\src\app\shared\models\booksearchresponsemodel.ts" />
-    <None Remove="client-app\src\app\shared\models\UserLoginRequestModel.ts" />
-    <None Remove="client-app\src\app\shared\services\authguard.service.ts" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="client-app\src\app\shared\models\author-model.ts" />
+		<None Remove="client-app\src\app\shared\models\auth\userregisterrequestmodel.ts" />
+		<None Remove="client-app\src\app\shared\models\book-model.ts" />
+		<None Remove="client-app\src\app\shared\models\booksearchresponsemodel.ts" />
+		<None Remove="client-app\src\app\shared\models\UserLoginRequestModel.ts" />
+		<None Remove="client-app\src\app\shared\services\authguard.service.ts" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="client-app\src\app\login\forms\" />
-<<<<<<< HEAD
-=======
-    <Folder Include="client-app\src\app\shared\components\google-books\" />
->>>>>>> 90a4e774b3ca53fcf0b79f437f7f9a0e725d0df1
-    <Folder Include="client-app\src\app\shared\services\book-service\" />
-    <Folder Include="client-app\src\app\shared\services\author-service\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="client-app\src\app\login\forms\" />
+		<Folder Include="client-app\src\app\shared\components\google-books\" />
+		<Folder Include="client-app\src\app\shared\services\book-service\" />
+		<Folder Include="client-app\src\app\shared\services\author-service\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <TypeScriptCompile Include="client-app\src\app\shared\models\author-model.ts" />
-    <TypeScriptCompile Include="client-app\src\app\shared\models\book-model.ts" />
-  </ItemGroup>
+	<ItemGroup>
+		<TypeScriptCompile Include="client-app\src\app\shared\models\author-model.ts" />
+		<TypeScriptCompile Include="client-app\src\app\shared\models\book-model.ts" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<TypeScriptCompile Include="**/*.ts" />
 	</ItemGroup>
 
-<<<<<<< HEAD
-	<ItemGroup>
-	  <Compile Remove="client-app\src\app\shared\components\google-books\**" />
-	  <Content Remove="client-app\src\app\shared\components\google-books\**" />
-	  <EmbeddedResource Remove="client-app\src\app\shared\components\google-books\**" />
-	  <None Remove="client-app\src\app\shared\components\google-books\**" />
-	  <TypeScriptCompile Remove="client-app\src\app\shared\components\google-books\**" />
-	</ItemGroup>
-
-=======
->>>>>>> 90a4e774b3ca53fcf0b79f437f7f9a0e725d0df1
 </Project>
