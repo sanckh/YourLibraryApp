@@ -38,6 +38,10 @@
 
   <ItemGroup>
     <Folder Include="client-app\src\app\login\forms\" />
+<<<<<<< HEAD
+=======
+    <Folder Include="client-app\src\app\shared\components\google-books\" />
+>>>>>>> 90a4e774b3ca53fcf0b79f437f7f9a0e725d0df1
     <Folder Include="client-app\src\app\shared\services\book-service\" />
     <Folder Include="client-app\src\app\shared\services\author-service\" />
   </ItemGroup>
@@ -51,6 +55,7 @@
 		<TypeScriptCompile Include="**/*.ts" />
 	</ItemGroup>
 
+<<<<<<< HEAD
 	<ItemGroup>
 	  <Compile Remove="client-app\src\app\shared\components\google-books\**" />
 	  <Content Remove="client-app\src\app\shared\components\google-books\**" />
@@ -59,4 +64,6 @@
 	  <TypeScriptCompile Remove="client-app\src\app\shared\components\google-books\**" />
 	</ItemGroup>
 
+=======
+>>>>>>> 90a4e774b3ca53fcf0b79f437f7f9a0e725d0df1
 </Project>
