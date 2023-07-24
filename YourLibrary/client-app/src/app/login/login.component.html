@@ -1,0 +1,26 @@
+<div class="login-container mat-elevation-z8">
+  <h2>Login</h2>
+  <div class="book-placeholder">
+    <!-- Add an image of a book or use an icon -->
+  </div>
+  <form (ngSubmit)="login()">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" id="email" name="email" [(ngModel)]="loginRequest.email" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" id="password" name="password" [(ngModel)]="loginRequest.password" required>
+    </mat-form-field>
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <button mat-raised-button color="primary" type="submit">Login</button>
+  </form>
+
+  <!-- Trigger button for the modal -->
+  <button mat-raised-button color="accent" type="button" (click)="openRegisterModal()">Register</button>
+
+  <div *ngIf="isRegisterModalOpen">
+    <app-registration-modal (closeModal)="closeRegisterModal()"
+                            (register)="register($event)"></app-registration-modal>
+  </div>
+</div>
