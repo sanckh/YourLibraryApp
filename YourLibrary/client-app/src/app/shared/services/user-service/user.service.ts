@@ -18,7 +18,6 @@ export class UserService {
   getCurrentUser(): Observable<CurrentUserModel> {
     const token = this.cookieService.get('jwtToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    console.log("token: ", token);
     return this.http.get<CurrentUserModel>(this.currentUserUrl, { headers }).pipe(
       catchError((error) => {
         console.error("Error getting current user:", error);

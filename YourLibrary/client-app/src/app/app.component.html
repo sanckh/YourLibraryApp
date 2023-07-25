@@ -1,9 +1,13 @@
-<mat-toolbar>
+<mat-toolbar *ngIf="!isLoginPage()">
   <button mat-icon-button (click)="toggleSidenav()" matTooltip="menu">
     <mat-icon>menu</mat-icon>
   </button>
   <span>{{ currentUser?.firstName }} {{ currentUser?.lastName }}'s Library</span>
   <span class="toolbar-item-spacer"></span>
+  <form class="search-container" [formGroup]="searchForm" (ngSubmit)="navigateToSearchPage()">
+    <input class="form-control search-input" formControlName="searchTerm" type="search" placeholder="Search for a book!" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0 search-button" type="submit"><mat-icon>search</mat-icon></button>
+  </form>
   <button mat-icon-button matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
     <mat-icon>account_circle</mat-icon>
   </button>
@@ -33,11 +37,11 @@
           </a>
         </mat-nav-list>
       </mat-expansion-panel>
-      <a mat-list-item routerLink="/home">Home</a>
+      <a mat-list-item (click)="sideNavOnHomeClicked()" [ngClass]="{'active-link': activeLink === 'home'}">Home</a>
       <a mat-list-item routerLink="/subscription">Subscription</a>
       <a mat-list-item routerLink="/library">Your Library</a>
       <a mat-list-item (click)="sideNavOnLogoutClicked()">Sign out</a>
-      <a mat-list-item (click)="sideNavOnSearchClicked()">Search for books</a>
+      <a mat-list-item (click)="sideNavOnSearchClicked()" [ngClass]="{'active-link': activeLink === 'search'}">Search for books</a>
     </mat-nav-list>
   </mat-sidenav>
 

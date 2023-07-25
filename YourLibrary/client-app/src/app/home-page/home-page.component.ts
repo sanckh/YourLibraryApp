@@ -76,19 +76,7 @@ export class HomePageComponent implements OnInit {
     this.sidenav.toggle();
   }
 
-  initCurrentUser(): void {
-    this.userService.getCurrentUser().subscribe(
-      (user: CurrentUserModel) => {
-        this.currentUser = user;
-        console.log(this.currentUser)
-        var cookies = document.cookie;
-        console.log(cookies);
-      },
-      (error) => {
-        console.error(error);
-      }
-    )
-  }
+
 
   //initRecentlyAddedBooks(): void {
   //  this.bookService.getRecentlyAddedBooks().subscribe(
@@ -102,7 +90,6 @@ export class HomePageComponent implements OnInit {
   //}
 
   ngOnInit(): void {
-    this.initCurrentUser();
     this.initRecentlyAddedBooks();
     this.initUserLists();
     this.initRecommendedBooks();
