@@ -19,7 +19,7 @@ export class AuthService {
 
   private loginUrl = 'https://localhost:7007/api/account/login';
   private registerUrl = 'https://localhost:7007/api/Account/Register';
-
+  private refreshUrl = 'https://localhost:7007/api/Account/refresh-token';
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
@@ -56,6 +56,17 @@ export class AuthService {
     return this.cookieService.get('jwtToken');
   }
 
+  refreshToken(): Observable<string> {
+    const token = this.cookieService.get('jwtToken');
+
+    return this.http.post<string>(this.refreshUrl, { token }, { responseType: 'text' as 'json' })
+      .pipe(
+        tap(newToken => {
+          this.cookieService.set('jwtToken', newToken, { sameSite: 'Lax' });
+        })
+    )
+  }
+
   isAuthenticated(): boolean {
     const token = this.cookieService.get('jwtToken');
 
@@ -71,6 +82,14 @@ export class AuthService {
 
       // If current date is greater than the expiration date, the token is expired.
       if (now > expirationDate) {
+        this.refreshToken().subscribe(
+          newToken => {
+            console.log('Token refreshed!');
+          },
+          error => {
+            console.error('Failed to refresh token!', error);
+          }
+        );
         return false;
       }
     } catch (error) {

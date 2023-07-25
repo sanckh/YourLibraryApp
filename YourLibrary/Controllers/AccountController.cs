@@ -57,6 +57,65 @@ namespace YourLibrary.API.Controllers
             }
         }
 
+        [HttpPost("refresh-token")]
+        public IActionResult RefreshToken([FromBody] RefreshTokenRequestModel request)
+        {
+            var principal = GetPrincipalFromExpiredToken(request.Token);
+            var newToken = GenerateJWTFromClaims(principal.Claims);
+
+            return Ok(newToken);
+        }
+
+        private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = configuration["Issuer"],
+                ValidAudience = configuration["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["PrivateKey"])),
+                ValidateLifetime = false // Here we are saying that we don't care about the token's expiration date
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid token");
+            }
+
+            return principal;
+        }
+
+        private string GenerateJWTFromClaims(IEnumerable<Claim> claims)
+        {
+            var identityClaims = new ClaimsIdentity();
+            identityClaims.AddClaims(claims);
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["PrivateKey"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+            var expire = DateTime.UtcNow.AddHours(Convert.ToDouble(configuration["ExpirationHours"]));
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var tokenDescription = new SecurityTokenDescriptor
+            {
+                Subject = identityClaims,
+                Expires = expire,
+                SigningCredentials = credentials,
+                Issuer = configuration["Issuer"],
+                Audience = configuration["Audience"]
+            };
+            var token = tokenHandler.CreateToken(tokenDescription);
+
+            return tokenHandler.WriteToken(token);
+        }
+
+
         private string GenerateJWT(UserLoginModel model)
         {
             var claims = new List<Claim>
