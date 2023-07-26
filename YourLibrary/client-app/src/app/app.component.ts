@@ -8,6 +8,7 @@ import { AuthService } from './shared/services/auth.service'
 //Models
 import { CurrentUserModel } from './shared/models/currentuser-model';
 import { FormControl, FormGroup } from '@angular/forms';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class AppComponent implements OnInit {
 
   activeLink: string;
-  currentUser: CurrentUserModel;
+  currentUser: CurrentUserModel | null = null;
   searchForm = new FormGroup({
     searchTerm: new FormControl('')
   });
@@ -27,24 +28,18 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    private authService: AuthService,
+    public authService: AuthService,
     private location: Location,
-  ) { }
+  )
+  {
+    // Subscribe to the currentUser$ observable to update the currentUser property whenever it changes
+    this.userService.currentUser$.subscribe(user => this.currentUser = user);
+  }
 
   toggleSidenav() {
     this.sidenav.toggle();
   }
 
-  initCurrentUser(): void {
-    this.userService.getCurrentUser().subscribe(
-      (user: CurrentUserModel) => {
-        this.currentUser = user;
-      },
-      (error) => {
-        console.error(error);
-      }
-    )
-  }
 
   isLoginPage(): boolean {
     const currentRoute = this.location.path();
@@ -74,6 +69,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initCurrentUser();
+    this.userService.currentUser$
+      .pipe(filter(user => !!user))
+      .subscribe(user => {
+        this.currentUser = user;
+      });
+
+    if (this.authService.isAuthenticated()) {
+      this.userService.getCurrentUser();
+    }
   }
+
+
 }

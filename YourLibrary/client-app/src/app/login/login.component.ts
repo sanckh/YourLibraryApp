@@ -4,6 +4,7 @@ import {SweetAlertService} from '../shared/services/sweetalert.service';
 import {Router} from '@angular/router'
 // Services
 import { AuthService } from '../shared/services/auth.service';
+import { UserService } from '../shared/services/user-service/user.service'
 
 // Models
 import { UserLoginRequestModel } from '../shared/models/auth/userloginrequestmodel';
@@ -42,7 +43,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private sweetAlertService: SweetAlertService,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -54,10 +56,19 @@ export class LoginComponent implements OnInit {
         // Handle successful login here
         // Access the JWT token from the response
         const token = response.jwt;
-        console.log("Success!")
         // You can store the token in localStorage or a cookie for auth purposes
-        // Redirect the user to the desired page
-        this.router.navigate(['/home']);
+        //Fetch Current User after successful login:
+        this.userService.getCurrentUser().subscribe(
+          user => {
+            console.log("User data fetched: ", user)
+            // Redirect the user to the desired page
+            this.router.navigate(['/home']);
+          },
+          error => {
+            console.error("Error fetching user data: ", error)
+          }
+        )
+        
       },
       error => {
         // Handle login error
