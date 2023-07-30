@@ -6,32 +6,35 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px;
 }
 
-h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+.login-title {
+  font-family: Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
 }
 
 .book-placeholder {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-  .book-placeholder img {
-    width: 80px;
-    height: 80px;
-    /* Add styling for the book image */
+  .login-image img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    border-radius: 15px;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
   }
 
 form {
-  width: 100%;
+  width: 80%;
+  margin-top: 50px;
 }
 
 .mat-form-field {

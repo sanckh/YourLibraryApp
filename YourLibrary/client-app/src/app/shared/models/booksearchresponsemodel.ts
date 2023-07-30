@@ -1,6 +1,6 @@
 export interface BookSearchResponseModel {
   kind?: string;
-  totalItems?: number;
+  totalItems: number;
   items?: Item[];
 }
 

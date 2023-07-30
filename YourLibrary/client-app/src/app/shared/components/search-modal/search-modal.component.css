@@ -1,3 +1,21 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+}
+
+.modal-title {
+  margin: 0;
+  padding: 0;
+}
+
+
+.close-button {
+  cursor: pointer;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -13,7 +31,6 @@
 
 .modal-content {
   background-color: #fff;
-  padding: 20px;
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   max-width: 90%;
@@ -31,6 +48,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 20px;
 }
 
   .search-results .col-sm-6 {
@@ -44,5 +62,3 @@
   background: none;
   border: none;
 }
-
-

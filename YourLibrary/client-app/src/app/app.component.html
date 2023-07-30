@@ -53,7 +53,7 @@
 </mat-sidenav-container>
 
 <div *ngIf="isSearchModalOpen">
-  <app-search-modal (closeModal)="closeSearchModal()" [searchResults]="searchResults"></app-search-modal>
+  <app-search-modal (closeModal)="closeSearchModal()" [searchResults]="searchResults" [query]="searchTerm"></app-search-modal>
 </div>
 
 

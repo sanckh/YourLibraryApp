@@ -1,13 +1,15 @@
 <div class="modal">
   <div class="modal-content">
-    <h2 class="modal-title">Search Results</h2>
-    <button class="close-btn" (click)="onCloseClicked()">&times;</button>
+    <div class="modal-header">
+      <h2 class="modal-title">Search Results</h2>
+      <button class="close-button" (click)="onCloseClicked()">&times;</button>
+    </div>
     <ng-container *ngIf="searchResults">
       <!-- Moved *ngFor into its own div, the 'search-results' class is now correctly applied to the container -->
       <div class="search-results">
         <div *ngFor="let result of searchResults" class="col-sm-6">
           <!-- Display each search result here -->
-          <div class="card text-center">
+          <div class="card">
             <div class="card-body">
               <img class="book-image" [src]="result.volumeInfo?.imageLinks?.thumbnail" alt="{{result.volumeInfo?.title}}" />
               <h6 class="card-title">{{result.volumeInfo?.title}}</h6>
@@ -17,6 +19,11 @@
             </div>
           </div>
         </div>
+        <button (click)="prevPage()">Previous</button>
+        <div>
+          Page {{pageIndex + 1}} of {{totalPages}}
+        </div>
+        <button (click)="nextPage()">Next</button>
       </div>
     </ng-container>
   </div>

@@ -23,6 +23,8 @@ export class AppComponent implements OnInit {
   searchTerm: string;
   isSearchModalOpen: boolean;
   searchResults: Item[];
+  pageIndex: 0;
+  pageSize: 10;
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -60,7 +62,8 @@ export class AppComponent implements OnInit {
   }
 
   openSearchModal() {
-    this.googleBooksService.getBooks(this.searchTerm).subscribe((data: BookSearchResponseModel) => {
+    this.googleBooksService.getBooks(this.searchTerm, this.pageIndex * this.pageSize, this.pageSize)
+      .subscribe((data: BookSearchResponseModel) => {
       if (data && data.items) {
         this.searchResults = data.items;
         this.isSearchModalOpen = true;
