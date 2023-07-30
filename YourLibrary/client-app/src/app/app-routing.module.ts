@@ -5,12 +5,12 @@ import { LoginComponent } from './login/login.component'
 import { AuthGuard } from './shared/services/authguard.service'
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, //empty path represents the base URL of the app
   { path: 'login', component: LoginComponent }, 
   { path: 'home', component: HomePageComponent, canActivate: [AuthGuard], children: [
     // { path: '', redirectTo: 'profile', pathMatch: 'full' },
   ]
   },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, //empty path represents the base URL of the app
 
 ];
 

@@ -3,3 +3,7 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.swal2-container {
+    z-index: 99999 !important;
+}

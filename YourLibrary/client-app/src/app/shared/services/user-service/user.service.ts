@@ -29,4 +29,8 @@ export class UserService {
       })
     );
   }
+
+  setCurrentUser(user: CurrentUserModel | null): void {
+    this.currentUserSubject.next(user);
+  }
 }

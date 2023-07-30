@@ -35,7 +35,9 @@ export class AppComponent implements OnInit {
   )
   {
     // Subscribe to the currentUser$ observable to update the currentUser property whenever it changes
-    this.userService.currentUser$.subscribe(user => this.currentUser = user);
+    this.userService.currentUser$
+      .subscribe(user =>
+        this.currentUser = user);
   }
 
   toggleSidenav() {
@@ -89,7 +91,7 @@ export class AppComponent implements OnInit {
       });
 
     if (this.authService.isAuthenticated()) {
-      this.userService.getCurrentUser();
+      this.userService.getCurrentUser().subscribe();
     }
   }
 

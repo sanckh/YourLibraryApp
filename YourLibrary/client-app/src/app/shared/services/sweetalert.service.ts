@@ -40,7 +40,7 @@ export class SweetAlertService {
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Yes',
-      cancelButtonText: 'No'
+      cancelButtonText: 'No',
     };
 
     return Swal.fire(options);

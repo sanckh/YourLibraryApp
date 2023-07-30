@@ -54,21 +54,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginRequest).subscribe(
       response => {
         // Handle successful login here
-        // Access the JWT token from the response
-        const token = response.jwt;
-        // You can store the token in localStorage or a cookie for auth purposes
-        //Fetch Current User after successful login:
-        this.userService.getCurrentUser().subscribe(
-          user => {
-            console.log("User data fetched: ", user)
-            // Redirect the user to the desired page
-            this.router.navigate(['/home']);
-          },
-          error => {
-            console.error("Error fetching user data: ", error)
-          }
-        )
-        
+        // Redirect the user to the desired page
+        this.router.navigate(['/home']);
       },
       error => {
         // Handle login error
@@ -76,6 +63,7 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
 
   openRegisterModal(): void {
     this.isRegisterModalOpen = true;

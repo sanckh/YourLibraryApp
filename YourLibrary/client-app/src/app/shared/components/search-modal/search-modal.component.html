@@ -1,18 +1,23 @@
 <div class="modal">
   <div class="modal-content">
     <h2 class="modal-title">Search Results</h2>
+    <button class="close-btn" (click)="onCloseClicked()">&times;</button>
     <ng-container *ngIf="searchResults">
-      <div *ngFor="let result of searchResults">
-        <!-- Display each search result here -->
-        <div class="card-body">
-          <h5 class="card-title">{{result.volumeInfo?.title}}</h5>
-          <p class="card-text">{{result.volumeInfo?.description}}</p>
-          <a [href]="result.volumeInfo?.infoLink" class="btn btn-primary" target="_blank">More info</a>
+      <!-- Moved *ngFor into its own div, the 'search-results' class is now correctly applied to the container -->
+      <div class="search-results">
+        <div *ngFor="let result of searchResults" class="col-sm-6">
+          <!-- Display each search result here -->
+          <div class="card text-center">
+            <div class="card-body">
+              <img class="book-image" [src]="result.volumeInfo?.imageLinks?.thumbnail" alt="{{result.volumeInfo?.title}}" />
+              <h6 class="card-title">{{result.volumeInfo?.title}}</h6>
+              <p class="card-text">{{result.volumeInfo?.authors}}</p>
+              <p class="card-text">{{result.volumeInfo?.categories}}</p>
+              <a [href]="result.volumeInfo?.infoLink" class="btn btn-primary" target="_blank">More info</a>
+            </div>
+          </div>
         </div>
       </div>
     </ng-container>
-    <div class="buttons">
-      <button mat-raised-button color="accent" (click)="onCloseClicked()">Close</button>
-    </div>
   </div>
 </div>

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router'
 import jwt_decode from 'jwt-decode';
 
-
+//Services
+import { UserService } from '../services/user-service/user.service'
 
 //Models
 import { UserLoginRequestModel } from '../models/auth/userloginrequestmodel';
@@ -20,11 +21,20 @@ export class AuthService {
   private loginUrl = 'https://localhost:7007/api/account/login';
   private registerUrl = 'https://localhost:7007/api/Account/Register';
   private refreshUrl = 'https://localhost:7007/api/Account/refresh-token';
+
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
+
+  get isAuthenticated$() {
+    return this.isAuthenticatedSubject.asObservable();
+  }
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
     private router: Router,
-  ) { }
+    private userService: UserService
+  ) {
+    this.checkTokenValidityAndRefresh().subscribe();
+  }
 
   login(loginRequest: UserLoginRequestModel): Observable<any> {
     return this.http.post<any>(this.loginUrl, loginRequest).pipe(
@@ -32,7 +42,9 @@ export class AuthService {
       tap((token: string) => {
         const expirationDate = new Date();
         expirationDate.setMinutes(expirationDate.getMinutes() + 60);
-        this.cookieService.set('jwtToken', token, expirationDate)
+        this.cookieService.set('jwtToken', token, expirationDate);
+        this.isAuthenticatedSubject.next(true); // Mark the user as authenticated
+        this.userService.getCurrentUser().subscribe();
       }
       )
     );
@@ -49,11 +61,17 @@ export class AuthService {
 
   logout(): void {
     this.cookieService.delete('jwtToken');
+    this.userService.setCurrentUser(null);
+    this.isAuthenticatedSubject.next(false); // Add this line
     this.router.navigateByUrl('/login');
   }
 
   getTokenFromCookie(): string {
     return this.cookieService.get('jwtToken');
+  }
+
+  private hasToken(): boolean {
+    return !!this.cookieService.get('jwtToken');
   }
 
   refreshToken(): Observable<string> {
@@ -68,10 +86,14 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
+    return this.isAuthenticatedSubject.value;
+  }
+
+  checkTokenValidityAndRefresh(): Observable<boolean> {
     const token = this.cookieService.get('jwtToken');
 
     if (!token) {
-      return false;
+      return of(false); // of() is used to create a new Observable that emits the specified value.
     }
 
     // Try to decode the token and check its expiry date.
@@ -82,26 +104,27 @@ export class AuthService {
 
       // If current date is greater than the expiration date, the token is expired.
       if (now > expirationDate) {
-        this.refreshToken().subscribe(
-          newToken => {
+        return this.refreshToken().pipe(
+          map(newToken => {
             console.log('Token refreshed!');
-          },
-          error => {
+            this.userService.getCurrentUser();
+            this.isAuthenticatedSubject.next(true); // Add this line
+            return true; // Token refresh successful.
+          }),
+          catchError(error => {
             console.error('Failed to refresh token!', error);
-          }
+            this.isAuthenticatedSubject.next(false); // Add this line
+            return of(false); // Token refresh failed.
+          })
         );
-        return false;
+      } else {
+        this.isAuthenticatedSubject.next(true); // Add this line
+        return of(true); // Token is not expired.
       }
     } catch (error) {
-      return false;
+      this.isAuthenticatedSubject.next(false); // Add this line
+      return of(false); // Token decoding failed.
     }
-
-    // If we got this far, the token exists and hasn't expired.
-    return true;
   }
-
-
-
-
 
 }
