@@ -208,3 +208,6 @@ ClientBin/
 *.jfm
 *.pfx
 *.
+/Infrastructure/obj/Debug/net6.0/Infrastructure.csproj.AssemblyReference.cache
+/YourLibrary/obj/Debug/net6.0/YourLibrary.API.csproj.AssemblyReference.cache
+/.vs/YourLibrary/v17/.suo
