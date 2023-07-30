@@ -33,20 +33,20 @@ namespace YourLibrary.API.Controllers
         }
 
         [HttpGet("GetBookById/{id}")]
-        public async Task<ActionResult> GetBookByIdAsync(int id)
+        public async Task<ActionResult> GetBookByIdAsync(int bookId, int userId)
         {
-            var book = await _bookService.GetBookByIdAsync(id);
+            var book = await _bookService.GetBookByIdAsync(bookId, userId);
             return Ok(book);
 
         }
 
-        [HttpPut("UpdateBookAsync/{id}")]
-        public async Task<ActionResult> UpdateBookByIdAsync(int bookId, int userId, BookModel book)
+        [HttpPut("updatebook/{bookId}")]
+        public async Task<ActionResult> UpdateBookByIdAsync(int bookId, int userId, [FromBody] UserBookModel updatedBook)
         {
 
-            var updatedBook = _bookService.UpdateBookAsync(bookId, userId, book);
+            var result = _bookService.UpdateBookAsync(bookId, userId, updatedBook);
 
-            return Ok(updatedBook);
+            return Ok(result);
         }
         [HttpDelete("DeleteBookAsync/{id}")]
         public async Task<ActionResult> DeleteBookAsync(int userId, int bookId)
@@ -59,35 +59,18 @@ namespace YourLibrary.API.Controllers
             return Ok();
         }
 
-        [HttpPost("InsertBookWithAuthors")]
-        public async Task<ActionResult> InsertBookWithAuthorAsync([FromBody] BookWithAuthorsModel book)
-        {
-            var authorIds = new List<int>();
-            foreach(var authorName in book.AuthorNames)
-            {
-                var author = await _authorService.GetAuthorByNameAsync(authorName);
-                if(author == null)
-                {
-                    // author doesn't exist, insert it into the database
-                    var authorModel = new AuthorModel { FullName = authorName };
-                    var authorId = await _authorService.InsertAuthorAsync(authorModel);
-                    authorIds.Add(authorId);
-                }
-                else
-                {
-                    authorIds.Add(author.Id);
-                }
-            }
-            book.AuthorIds = authorIds;
-            await _bookService.InsertBookWithAuthorAsync(book);
-            return Ok();
-        }
-
         [HttpGet("recentlyadded")]
         public async Task<IActionResult> GetRecentlyAddedBooksAsync(int userId)
         {
             var days = 30; //Number of days for recent additions
             var books = await _bookService.GetRecentlyAddedBooksAsync(days, userId);
+            return Ok(books);
+        }
+
+        [HttpGet("unread")]
+        public async Task<IActionResult> GetUnreadBooksAsync(int userId)
+        {
+            var books = await _bookService.GetUnreadBooksAsync(userId);
             return Ok(books);
         }
     }

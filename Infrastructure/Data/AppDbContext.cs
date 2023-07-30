@@ -19,16 +19,6 @@ namespace Infrastructure.Data
         //override onmodelcreate method
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Book_Author>()
-                .HasOne(b => b.Book)
-                .WithMany(ba => ba.Book_Authors)
-                .HasForeignKey(bi => bi.BookId);
-
-            modelBuilder.Entity<Book_Author>()
-                .HasOne(b => b.Author)
-                .WithMany(ba => ba.Book_Authors)
-                .HasForeignKey(bi => bi.AuthorId);
-
             modelBuilder.Entity<UserBook>()
                .HasOne(ub => ub.User)
                .WithMany(u => u.UserBooks)
@@ -38,13 +28,17 @@ namespace Infrastructure.Data
                 .HasOne(ub => ub.Book)
                 .WithMany(b => b.UserBooks)
                 .HasForeignKey(ub => ub.BookId);
+
+            modelBuilder.Entity<Book>()
+                .HasOne(b => b.Publisher)
+                .WithMany(p => p.Books)
+                .HasForeignKey(b => b.PublisherId);
         }
 
         //Db Tables
         public DbSet<Book> Books { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<Book_Author> Book_Authors { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }

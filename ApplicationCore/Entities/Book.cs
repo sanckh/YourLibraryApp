@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +18,12 @@ namespace ApplicationCore.Entities
         public int? Rating { get; set; }
         public string CoverUrl { get; set; }
         public DateTime DateAdded { get; set; }
-
+        public int? PublisherId { get; set; }
 
         //navigation props
-        public int? PublisherId { get; set; }
-        public Publisher Publisher { get; set; }
+        public PublisherModel? Publisher { get; set; }
+        public List<AuthorModel> Authors { get; set; }
         public List<UserBook> UserBooks { get; set; }
 
-        //book author nav prop
-        public List<Book_Author> Book_Authors { get; set; }
     }
 }

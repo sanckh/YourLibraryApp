@@ -10,7 +10,6 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IAuthorService
     {
-        Task<AuthorWithBooksModel> GetAuthorWithBooksAsync(int id);
         Task<int> InsertAuthorAsync(AuthorModel book);
         //Task<int> UpdateAuthorAsync(AuthorModel book);
         Task<int> DeleteAuthorAsync(int id);

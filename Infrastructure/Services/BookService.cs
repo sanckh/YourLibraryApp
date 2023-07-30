@@ -24,9 +24,9 @@ namespace Infrastructure.Services
             _authorRepository = authorRepository;
             _authorService = authorService;
         }
-        public async Task<int> DeleteBookAsync(int id, int userId)
+        public async Task<int> DeleteBookAsync(int bookId, int userId)
         {
-            var userBook = await _bookRepository.GetUserBookAsync(id, userId);
+            var userBook = await _bookRepository.GetUserBookAsync(bookId, userId);
 
             if(userBook != null)
             {
@@ -38,14 +38,13 @@ namespace Infrastructure.Services
             return 0;
         }
 
-        public async Task<PagedResult<BookModel>> GetAllBooksAsync(
-            int pageNumber, 
-            int pageSize, 
+        public async Task<PagedResult<UserBookModel>> GetAllBooksAsync(
+            int pageNumber,
+            int pageSize,
             int userId,
-            string sortColumn, 
+            string sortColumn,
             SortDirection sortDirection)
         {
-            //var books = await _bookRepository.GetAllAsync();
             var userBooks = await _bookRepository.GetAllBooksByUserIdAsync(userId);
 
             var totalCount = userBooks.Count();
@@ -58,153 +57,274 @@ namespace Infrastructure.Services
             // Apply pagination
             var pagedBooks = sortedBooks.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-            var bookModels = pagedBooks.Select(b => new BookModel
+            var userBookModels = pagedBooks.Select(b => new UserBookModel
             {
-                Title = b.Title,
-                Description = b.Description,
-                Genre = b.Genre,
+                UserId = b.UserId,
+                BookId = b.BookId,
+                Book = new BookModel
+                {
+                    Id = b.Book.Id,
+                    Title = b.Book.Title,
+                    Description = b.Book.Description,
+                    Genre = b.Book.Genre,
+                    CoverUrl = b.Book.CoverUrl,
+                    DateAdded = b.Book.DateAdded,
+                    Publisher = new PublisherModel
+                    {
+                        Id = b.Book.Publisher.Id,
+                        Name = b.Book.Publisher.Name,
+                    },
+                    Authors = b.Book.Authors.Select(a => new AuthorModel
+                    {
+                        Id = a.Id,
+                        FullName = a.FullName,
+                    }).ToList(),
+                },
                 isRead = b.isRead,
                 DateRead = b.DateRead,
                 Rating = b.Rating,
-                CoverUrl = b.CoverUrl,
-                DateAdded = b.DateAdded,
             });
 
-            return new PagedResult<BookModel>
+            return new PagedResult<UserBookModel>
             {
                 TotalCount = totalCount,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 SortColumn = sortColumn,
                 SortDirection = sortDirection,
-                Results = bookModels.ToList(),
+                Results = userBookModels.ToList(),
             };
         }
 
-        public async Task<BookModel> UpdateBookAsync(int bookId, int userId, BookModel updatedBook)
+        public async Task<UserBookModel> UpdateBookAsync(int bookId, int userId, UserBookModel updatedUserBook)
         {
             var userBook = await _bookRepository.GetUserBookAsync(bookId, userId);
 
             if (userBook == null)
             {
-                throw new ArgumentException("Book not found!");
+                throw new ArgumentException("Book not found or not owned by the user!");
             }
 
             // Update only the allowed fields
-            userBook.Book.isRead = updatedBook.isRead;
-            userBook.Book.DateRead = updatedBook.DateRead;
-            userBook.Book.Rating = updatedBook.Rating;
+            userBook.isRead = updatedUserBook.isRead;
+            userBook.DateRead = updatedUserBook.DateRead;
+            userBook.Rating = updatedUserBook.Rating;
 
             await _bookRepository.SaveChangesAsync();
 
-            // Map the updated book to a BookModel and return
-            var bookModel = new BookModel
+            // Map the updated UserBook to a UserBookModel and return
+            var userBookModel = new UserBookModel
             {
-                Title = userBook.Book.Title,
-                Description = userBook.Book.Description,
-                Genre = userBook.Book.Genre,
-                isRead = userBook.Book.isRead,
-                DateRead = userBook.Book.DateRead,
-                Rating = userBook.Book.Rating,
-                CoverUrl = userBook.Book.CoverUrl,
-                DateAdded = userBook.Book.DateAdded
+                UserId = userBook.UserId,
+                BookId = userBook.BookId,
+                isRead = userBook.isRead,
+                DateRead = userBook.DateRead,
+                Rating = userBook.Rating,
+                DateAdded = userBook.DateAdded,
+                Book = new BookModel
+                {
+                    Id = userBook.Book.Id,
+                    Title = userBook.Book.Title,
+                    Description = userBook.Book.Description,
+                    Genre = userBook.Book.Genre,
+                    CoverUrl = userBook.Book.CoverUrl,
+                    DateAdded = userBook.Book.DateAdded,
+                    Publisher = new PublisherModel
+                    {
+                        Id = userBook.Book.Publisher.Id,
+                        Name = userBook.Book.Publisher.Name,
+                    },
+                    Authors = userBook.Book.Authors.Select(a => new AuthorModel
+                    {
+                        Id = a.Id,
+                        FullName = a.FullName,
+                    }).ToList(),
+                }
             };
 
-            return bookModel; // Indicate that the book was not found or not owned by the user
+            return userBookModel;
         }
 
 
-        public async Task<BookWithAuthorsModel> GetBookByIdAsync(int bookId)
-        {
-            var books = await _bookRepository.GetAllAsync();
-            if (books == null)
-            {
-                throw new ArgumentException("Book not found");
-            }
-            var _book = books.Where(n => n.Id == bookId)
-                 .Select(book => new BookWithAuthorsModel()
-                 {
-                     Title = book.Title,
-                     Description = book.Description,
-                     Genre = book.Genre,
-                     isRead = book.isRead,
-                     DateRead = book.DateRead,
-                     Rating = book.Rating,
-                     CoverUrl = book.CoverUrl,
-                     PublisherName = book.Publisher?.Name,
-                     AuthorNames = book.Book_Authors?.Select(n => n.Author.FullName).ToList() ?? new List<string>()
-                 }).FirstOrDefault();
-
-
-            if (_book == null)
-            {
-                throw new ArgumentException("Unable to update");
-            }
-
-            return _book;
-        }
-
-        //now in the service level, let's create the logic behind that idea
-        //update 07/2023 - this may be a deprecated method because I am going to use
-        // an api to retrieve all book information
-        public async Task<int> InsertBookWithAuthorAsync(BookWithAuthorsModel book)
-        {
-            //lets get our authors
-            var author = await _authorService.GetAuthorByNameAsync(book.AuthorNames.FirstOrDefault());
-
-            //null check
-            if (author == null)
-            {
-                // we have a null author when we insert a new book, so lets add the author!
-                author = new Author { FullName = book.AuthorNames.FirstOrDefault() };
-                await _authorService.InsertAuthorAsync(new AuthorModel { FullName = author.FullName });
-                author = await _authorService.GetAuthorByNameAsync(book.AuthorNames.FirstOrDefault());
-            }
-
-            Book _book = new Book();
-            _book.Title = book.Title;
-            _book.Description = book.Description;
-            _book.Genre = book.Genre;
-            _book.isRead = book.isRead;
-            _book.DateRead = book.DateRead;
-            _book.Rating = book.Rating;
-            _book.CoverUrl = book.CoverUrl;
-            _book.DateAdded = book.DateAdded;
-
-            await _bookRepository.InsertAsync(_book);
-
-            //now lets add the id of the book and the id of the author to our db! Great example of many to many relationships.
-            Book_Author bookAuthor = new Book_Author();
-            bookAuthor.BookId = _book.Id;
-            bookAuthor.AuthorId = author.Id;
-            await _book_AuthorRepository.InsertAsync(bookAuthor);
-
-            //dont forget to save!
-            return await _bookRepository.SaveChangesAsync();
-        }
-
-        public async Task<List<BookModel>> GetRecentlyAddedBooksAsync(int days, int userId)
+        public async Task<List<UserBookModel>> GetRecentlyAddedBooksAsync(int days, int userId)
         {
             var startDate = DateTime.UtcNow.AddDays(-days);
-            var books = await _bookRepository.GetAllBooksByUserIdAsync(userId);
+            var userBooks = await _bookRepository.GetAllBooksByUserIdAsync(userId);
 
-            var recentlyAddedBooks = books
+            var recentlyAddedUserBooks = userBooks
                 .Where(b => b.DateAdded >= startDate)
-                .Select(b => new BookModel
+                .Select(b => new UserBookModel
                 {
-                    Title = b.Title,
-                    Description = b.Description,
-                    Genre = b.Genre,
+                    UserId = b.UserId,
+                    BookId = b.BookId,
                     isRead = b.isRead,
                     DateRead = b.DateRead,
                     Rating = b.Rating,
-                    CoverUrl = b.CoverUrl,
                     DateAdded = b.DateAdded,
+                    Book = new BookModel
+                    {
+                        Id = b.Book.Id,
+                        Title = b.Book.Title,
+                        Description = b.Book.Description,
+                        Genre = b.Book.Genre,
+                        CoverUrl = b.Book.CoverUrl,
+                        DateAdded = b.Book.DateAdded,
+                        Publisher = new PublisherModel
+                        {
+                            Id = b.Book.Publisher.Id,
+                            Name = b.Book.Publisher.Name,
+                        },
+                        Authors = b.Book.Authors.Select(a => new AuthorModel
+                        {
+                            Id = a.Id,
+                            FullName = a.FullName,
+                        }).ToList(),
+                    }
                 })
                 .ToList();
 
-            return recentlyAddedBooks;
+            return recentlyAddedUserBooks;
         }
+
+        public async Task<UserBookModel> GetBookByIdAsync(int bookId, int userId)
+        {
+            var userBook = await _bookRepository.GetUserBookAsync(bookId, userId);
+
+            if (userBook == null)
+            {
+                throw new ArgumentException("Book not found or not owned by the user!");
+            }
+
+            var userBookModel = new UserBookModel
+            {
+                UserId = userBook.UserId,
+                BookId = userBook.BookId,
+                isRead = userBook.isRead,
+                DateRead = userBook.DateRead,
+                Rating = userBook.Rating,
+                DateAdded = userBook.DateAdded,
+                Book = new BookModel
+                {
+                    Id = userBook.Book.Id,
+                    Title = userBook.Book.Title,
+                    Description = userBook.Book.Description,
+                    Genre = userBook.Book.Genre,
+                    CoverUrl = userBook.Book.CoverUrl,
+                    DateAdded = userBook.Book.DateAdded,
+                    Publisher = new PublisherModel
+                    {
+                        Id = userBook.Book.Publisher.Id,
+                        Name = userBook.Book.Publisher.Name,
+                    },
+                    Authors = userBook.Book.Authors.Select(a => new AuthorModel
+                    {
+                        Id = a.Id,
+                        FullName = a.FullName,
+                    }).ToList(),
+                }
+            };
+
+            return userBookModel;
+        }
+
+        public async Task<PagedResult<UserBookModel>> SearchUserBooksAsync(int pageNumber, int pageSize, int userId, string searchQuery, string sortColumn, SortDirection sortDirection)
+        {
+            var userBooks = await _bookRepository.GetAllBooksByUserIdAsync(userId);
+
+            var filteredUserBooks = userBooks
+                .Where(ub => ub.Book.Title.Contains(searchQuery) ||
+                             ub.Book.Description.Contains(searchQuery) ||
+                             ub.Book.Authors.Any(a => a.FullName.Contains(searchQuery)) ||
+                             ub.Book.Publisher.Name.Contains(searchQuery));
+
+            var totalCount = filteredUserBooks.Count();
+
+            // Apply sorting
+            var sortedUserBooks = sortDirection == SortDirection.Ascending
+                    ? filteredUserBooks.OrderBy(ub => ub.Book.GetType().GetProperty(sortColumn).GetValue(ub.Book))
+                    : filteredUserBooks.OrderByDescending(ub => ub.Book.GetType().GetProperty(sortColumn).GetValue(ub.Book));
+
+            // Apply pagination
+            var pagedUserBooks = sortedUserBooks.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+            var userBookModels = pagedUserBooks.Select(ub => new UserBookModel
+            {
+                Id = ub.Id,
+                UserId = ub.UserId,
+                BookId = ub.BookId,
+                isRead = ub.isRead,
+                Rating = ub.Rating,
+                DateAdded = ub.DateAdded,
+                DateRead = ub.DateRead,
+                Book = new BookModel
+                {
+                    Id = ub.Book.Id,
+                    Title = ub.Book.Title,
+                    Description = ub.Book.Description,
+                    Genre = ub.Book.Genre,
+                    CoverUrl = ub.Book.CoverUrl,
+                    DateAdded = ub.Book.DateAdded,
+                    Publisher = new PublisherModel
+                    {
+                        Id = ub.Book.Publisher.Id,
+                        Name = ub.Book.Publisher.Name,
+                    },
+                    Authors = ub.Book.Authors.Select(a => new AuthorModel
+                    {
+                        Id = a.Id,
+                        FullName = a.FullName,
+                    }).ToList(),
+                }
+            });
+
+            return new PagedResult<UserBookModel>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                SortColumn = sortColumn,
+                SortDirection = sortDirection,
+                Results = userBookModels.ToList(),
+            };
+        }
+
+        public async Task<List<UserBookModel>> GetUnreadBooksAsync(int userId)
+        {
+            // Get all user books
+            var userBooks = await _bookRepository.GetAllBooksByUserIdAsync(userId);
+
+            // Filter the books that are not read
+            var unreadBooks = userBooks.Where(ub => !ub.isRead).ToList();
+
+            // Map to UserBookModel and return
+            var unreadBookModels = unreadBooks.Select(ub => new UserBookModel
+            {
+                Id = ub.Id,
+                UserId = ub.UserId,
+                BookId = ub.BookId,
+                Book = new BookModel
+                {
+                    Id = ub.Book.Id,
+                    Title = ub.Book.Title,
+                    Description = ub.Book.Description,
+                    Genre = ub.Book.Genre,
+                    CoverUrl = ub.Book.CoverUrl,
+                    DateAdded = ub.Book.DateAdded,
+                    Publisher = new PublisherModel
+                    {
+                        Id = ub.Book.Publisher.Id,
+                        Name = ub.Book.Publisher.Name,
+                    },
+                    // If you have added Author info in BookModel, you can map it here as well
+                },
+                isRead = ub.isRead,
+                DateRead = ub.DateRead,
+                Rating = ub.Rating,
+            }).ToList();
+
+            return unreadBookModels;
+        }
+
 
     }
 }

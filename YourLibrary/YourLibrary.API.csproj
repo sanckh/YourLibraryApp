@@ -39,7 +39,6 @@
 	<ItemGroup>
 		<Folder Include="client-app\src\app\login\forms\" />
 		<Folder Include="client-app\src\app\search\" />
-		<Folder Include="client-app\src\app\shared\components\google-books\" />
 		<Folder Include="client-app\src\app\shared\services\book-service\" />
 		<Folder Include="client-app\src\app\shared\services\author-service\" />
 	</ItemGroup>
@@ -51,6 +50,14 @@
 
 	<ItemGroup>
 		<TypeScriptCompile Include="**/*.ts" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="client-app\src\app\shared\components\google-books\**" />
+	  <Content Remove="client-app\src\app\shared\components\google-books\**" />
+	  <EmbeddedResource Remove="client-app\src\app\shared\components\google-books\**" />
+	  <None Remove="client-app\src\app\shared\components\google-books\**" />
+	  <TypeScriptCompile Remove="client-app\src\app\shared\components\google-books\**" />
 	</ItemGroup>
 
 </Project>

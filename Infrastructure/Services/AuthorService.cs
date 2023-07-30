@@ -26,39 +26,6 @@ namespace Infrastructure.Services
             return await authorRepository.InsertAsync(_author);
         }
 
-        public async Task<AuthorWithBooksModel> GetAuthorWithBooksAsync(int id)
-        {
-            var author = await authorRepository.GetByIdAsync(id);
-            if(author == null)
-            {
-                return null;
-            }
-            var authorWithBooks = new AuthorWithBooksModel
-            {
-                FullName = author.FullName,
-                BookTitles = author.Book_Authors.Select(n => n.Book.Title).ToList()
-            };
-
-            return authorWithBooks;
-        } 
-
-
-
-        //public async Task<int> UpdateAuthorAsync(AuthorModel author)
-        //{
-        //    var existingAuthor = await authorRepository.GetByIdAsync(author.Id);
-        //    if (existingAuthor == null)
-        //    {
-        //        return 0;
-        //    }
-
-        //    existingAuthor.FullName = author.FullName;
-
-        //    await authorRepository.UpdateAsync(existingAuthor);
-
-        //    return await authorRepository.SaveChangesAsync();
-        //}
-
         public async Task<int> DeleteAuthorAsync(int id)
         {
             var author = await authorRepository.GetByIdAsync(id);

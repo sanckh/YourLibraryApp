@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230730004138_UpdatedUserBooks")]
+    partial class UpdatedUserBooks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +71,7 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("PublisherId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PublisherId1")
+                    b.Property<int>("PublisherId1")
                         .HasColumnType("int");
 
                     b.Property<int?>("Rating")
@@ -297,13 +300,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationCore.Entities.Book", b =>
                 {
-                    b.HasOne("ApplicationCore.Models.PublisherModel", "Publisher")
+                    b.HasOne("ApplicationCore.Entities.Publisher", null)
                         .WithMany("Books")
                         .HasForeignKey("PublisherId");
 
-                    b.HasOne("ApplicationCore.Entities.Publisher", null)
-                        .WithMany("Books")
-                        .HasForeignKey("PublisherId1");
+                    b.HasOne("ApplicationCore.Models.PublisherModel", "Publisher")
+                        .WithMany()
+                        .HasForeignKey("PublisherId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Publisher");
                 });
@@ -399,11 +404,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("UserBooks");
 
                     b.Navigation("UserName");
-                });
-
-            modelBuilder.Entity("ApplicationCore.Models.PublisherModel", b =>
-                {
-                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

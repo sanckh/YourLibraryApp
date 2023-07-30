@@ -21,8 +21,9 @@ namespace Infrastructure.Repository
         public async Task<UserBook> GetUserBookAsync(int userId, int bookId)
         {
             return await _dbContext.UserBooks
-                    .Include(x => x.Book)
-                    .FirstOrDefaultAsync(x => x.Book.Id == bookId && x.UserId == userId);
+                .Include(x => x.Book)
+                .Include(x => x.User)  // Include this if necessary
+                .FirstOrDefaultAsync(x => x.Book.Id == bookId && x.UserId == userId);
         }
 
         public async Task DeleteUserBookAsync(UserBook userBook)
@@ -31,13 +32,14 @@ namespace Infrastructure.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooksByUserIdAsync(int userId)
+        public async Task<IEnumerable<UserBook>> GetAllBooksByUserIdAsync(int userId)
         {
-            var userBooks = await _dbContext.UserBooks.Where(x => x.UserId == userId)
-                .Select(x => x.Book)
+            return await _dbContext.UserBooks
+                .Include(x => x.User)
+                .Include(x => x.Book)
+                .Where(x => x.UserId == userId)
                 .ToListAsync();
-
-            return userBooks;
         }
+
     }
 }

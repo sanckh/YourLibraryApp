@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,19 +10,13 @@ namespace ApplicationCore.Models
     public class PublisherModel
     {
         //one to many example. One publisher, multiple books
+        public int Id { get; set; }
         public string Name { get; set; }
 
-    }
-    public class PublisherWithBooksAndAuthorsModel
-    {
-        public string Name { get; set; }
-        public List<BookAuthorModel> BookAuthors { get; set; }
-    }
+        //navigation properties
+        //defines the relationship between models
+        public List<Book> Books { get; set; }
 
-    public class BookAuthorModel
-    {
-        public string BookName { get; set; }
-        public List<string> BookAuthors { get; set; }
 
     }
 }

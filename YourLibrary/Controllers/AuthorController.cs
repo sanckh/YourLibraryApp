@@ -26,17 +26,6 @@ namespace YourLibrary.API.Controllers
             return Ok(id);
         }
 
-        [HttpGet("GetAuthorWithBook/{id}")]
-        public async Task<ActionResult<AuthorWithBooksModel>> GetAuthorWithBooksAsync(int id)
-        {
-            var authorWithBooks = await _authorService.GetAuthorWithBooksAsync(id);
-            if(authorWithBooks == null)
-            {
-                return NotFound();
-            }
-            return Ok(authorWithBooks);
-        }
-
         [HttpDelete("DeleteAuthor/{id}")]
         public async Task<ActionResult<int>> DeleteAuthorAsync(int id)
         {
