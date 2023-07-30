@@ -1,0 +1,18 @@
+<div class="modal">
+  <div class="modal-content">
+    <h2 class="modal-title">Search Results</h2>
+    <ng-container *ngIf="searchResults">
+      <div *ngFor="let result of searchResults">
+        <!-- Display each search result here -->
+        <div class="card-body">
+          <h5 class="card-title">{{result.volumeInfo?.title}}</h5>
+          <p class="card-text">{{result.volumeInfo?.description}}</p>
+          <a [href]="result.volumeInfo?.infoLink" class="btn btn-primary" target="_blank">More info</a>
+        </div>
+      </div>
+    </ng-container>
+    <div class="buttons">
+      <button mat-raised-button color="accent" (click)="onCloseClicked()">Close</button>
+    </div>
+  </div>
+</div>

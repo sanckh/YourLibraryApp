@@ -26,7 +26,7 @@ import { SweetAlertService } from './shared/services/sweetalert.service';
 import { RegistrationModalComponent } from './shared/components/registration-modal/registration-modal.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { GoogleBookListComponent } from './shared/components/google-book-list/google-book-list.component';
-import { SearchComponent } from './search/search.component'
+import { SearchModalComponent } from './shared/components/search-modal/search-modal.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { SearchComponent } from './search/search.component'
     LoginComponent,
     RegistrationModalComponent,
     GoogleBookListComponent,
-    SearchComponent
+    SearchModalComponent
     
   ],
   imports: [

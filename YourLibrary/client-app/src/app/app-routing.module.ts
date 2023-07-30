@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component'
-import { SearchComponent } from './search/search.component'
 import { AuthGuard } from './shared/services/authguard.service'
 
 const routes: Routes = [
@@ -12,7 +11,6 @@ const routes: Routes = [
     // { path: '', redirectTo: 'profile', pathMatch: 'full' },
   ]
   },
-  { path: 'search', component: SearchComponent },
 
 ];
 

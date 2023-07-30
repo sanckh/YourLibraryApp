@@ -38,7 +38,6 @@
 
 	<ItemGroup>
 		<Folder Include="client-app\src\app\login\forms\" />
-		<Folder Include="client-app\src\app\search\" />
 		<Folder Include="client-app\src\app\shared\services\book-service\" />
 		<Folder Include="client-app\src\app\shared\services\author-service\" />
 	</ItemGroup>

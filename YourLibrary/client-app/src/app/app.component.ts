@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router'
-import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Location } from '@angular/common';
 //Services
 import { UserService } from './shared/services/user-service/user.service';
 import { AuthService } from './shared/services/auth.service'
 //Models
 import { CurrentUserModel } from './shared/models/currentuser-model';
-import { FormControl, FormGroup } from '@angular/forms';
 import { filter } from 'rxjs';
+import { GoogleBooksService } from './shared/services/google-books.service';
+import { BookSearchResponseModel, Item } from './shared/models/booksearchresponsemodel';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +20,9 @@ export class AppComponent implements OnInit {
 
   activeLink: string;
   currentUser: CurrentUserModel | null = null;
-  searchForm = new FormGroup({
-    searchTerm: new FormControl('')
-  });
+  searchTerm: string;
+  isSearchModalOpen: boolean;
+  searchResults: Item[];
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     public authService: AuthService,
     private location: Location,
+    private googleBooksService: GoogleBooksService
   )
   {
     // Subscribe to the currentUser$ observable to update the currentUser property whenever it changes
@@ -50,22 +52,33 @@ export class AppComponent implements OnInit {
     this.authService.logout();
   }
 
-  sideNavOnSearchClicked(): void {
-    this.activeLink = 'search';
-    this.router.navigate(['/search']);
-  }
-
   sideNavOnHomeClicked(): void {
     this.activeLink = 'home';
     this.router.navigate(['/home']);
   }
 
-  navigateToSearchPage(): void {
-    this.activeLink = 'search';
-    const searchTerm = this.searchForm.get('searchTerm')!.value;
-    if (searchTerm && searchTerm.trim() !== '') {
-      this.router.navigate(['/search', { query: searchTerm }]);
-    }
+  openSearchModal() {
+    this.googleBooksService.getBooks(this.searchTerm).subscribe((data: BookSearchResponseModel) => {
+      if (data && data.items) {
+        this.searchResults = data.items;
+        this.isSearchModalOpen = true;
+      } else {
+        console.log('No items found in the response data');
+      }
+    }, error => {
+      console.error('Error: ', error);
+    });
+  }
+
+  onSubmit(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.openSearchModal();
+  }
+
+  closeSearchModal(): void {
+    this.isSearchModalOpen = false;
+    this.searchResults = [];  // Clear the search results
+    this.searchTerm = '';  // Clear the search term
   }
 
   ngOnInit(): void {
