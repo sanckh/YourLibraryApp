@@ -9,7 +9,7 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IPublisherService
     {
-        public void AddPublisher(PublisherModel publisher);
+        public Task<PublisherModel> AddPublisherAsync(PublisherModel publisher);
        
     }
 }

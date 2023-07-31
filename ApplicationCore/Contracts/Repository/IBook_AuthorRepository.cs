@@ -9,5 +9,6 @@ namespace ApplicationCore.Contracts.Repository
 {
     public interface IBook_AuthorRepository : IRepository<Book_Author>
     {
+        Task AddBookAuthorAsync(int authorId, int bookId);
     }
 }

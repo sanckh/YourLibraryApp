@@ -9,7 +9,6 @@ using ApplicationCore.Contracts.Repository;
 using ApplicationCore.Contracts.Services;
 using ApplicationCore.Enums;
 using ApplicationCore.Entities;
-using ApplicationCore.Models;
 
 namespace Infrastructure.Services
 {

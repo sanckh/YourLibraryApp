@@ -21,9 +21,9 @@ namespace ApplicationCore.Entities
         public int? PublisherId { get; set; }
 
         //navigation props
-        public PublisherModel? Publisher { get; set; }
-        public List<AuthorModel> Authors { get; set; }
-        public List<UserBook> UserBooks { get; set; }
+        public Publisher? Publisher { get; set; }
+        public List<Book_Author>? BookAuthors { get; set; }
+        public List<UserBook>? UserBooks { get; set; }
 
     }
 }

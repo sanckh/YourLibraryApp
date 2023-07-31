@@ -6,6 +6,7 @@ using ApplicationCore.Models;
 using ApplicationCore.Contracts.Services;
 using ApplicationCore.Enums;
 using ApplicationCore.Contracts.Repository;
+using Infrastructure.Services;
 
 namespace YourLibrary.API.Controllers
 {
@@ -73,5 +74,36 @@ namespace YourLibrary.API.Controllers
             var books = await _bookService.GetUnreadBooksAsync(userId);
             return Ok(books);
         }
+
+        [HttpPost("add-to-library")]
+        public async Task<IActionResult> AddBookToUserLibraryAsync([FromRoute] int userId, [FromBody] BookModel newBook)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var userBook = await _bookService.AddBookToUserLibraryAsync(userId, newBook);
+                return Ok(userBook);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost("add-book")]
+        public async Task<IActionResult> AddBookAsync(BookModel model)
+        {
+            var bookId = await _bookService.AddBookAsync(model);
+            return Ok(bookId);
+        }
+
     }
 }

@@ -17,7 +17,7 @@ namespace Infrastructure.Services
         {
             _publisherRepository = _pub;
         }
-        public void AddPublisher(PublisherModel publisher)
+        public async Task<PublisherModel> AddPublisherAsync(PublisherModel publisher)
         {
             var _publisher = new Publisher()
             {
@@ -26,6 +26,9 @@ namespace Infrastructure.Services
 
             _publisherRepository.AddAsync(_publisher);
             _publisherRepository.SaveChangesAsync();
+
+            publisher.Id = _publisher.Id;
+            return publisher;
         }
     }
 }

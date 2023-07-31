@@ -18,6 +18,9 @@ namespace ApplicationCore.Contracts.Services
         Task<PagedResult<UserBookModel>> SearchUserBooksAsync(int pageNumber, int pageSize, int userId, string searchQuery, string sortColumn, SortDirection sortDirection);
         Task<UserBookModel> GetBookByIdAsync(int bookId, int userId);
         Task<List<UserBookModel>> GetUnreadBooksAsync(int userId);
+        Task<UserBookModel> AddBookToUserLibraryAsync(int userId, BookModel newBook);
+        Task<int> AddBookAsync(BookModel newBook);
+
 
 
     }

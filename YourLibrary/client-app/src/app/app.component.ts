@@ -61,6 +61,11 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  sideNavOnMyLibraryClicked(): void {
+    this.activeLink = 'mylibrary'
+    this.router.navigate(['/mylibrary']);
+  }
+
   openSearchModal() {
     this.googleBooksService.getBooks(this.searchTerm, this.pageIndex * this.pageSize, this.pageSize)
       .subscribe((data: BookSearchResponseModel) => {

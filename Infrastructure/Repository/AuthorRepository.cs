@@ -8,6 +8,7 @@ using ApplicationCore.Entities;
 using ApplicationCore.Contracts.Repository;
 using System.Data;
 using Microsoft.EntityFrameworkCore;
+using ApplicationCore.Models;
 
 namespace Infrastructure.Repository
 {
@@ -19,20 +20,17 @@ namespace Infrastructure.Repository
             _db = _con;
         }
 
-        public Task<Author> AddAuthor(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Author> GetAuthorWithBooksAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Author> GetByNameAsync(string name)
         {
             return await _db.Authors
                 .Where(a => a.FullName == name)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<Author> GetAuthorAsync(int id)
+        {
+            return await _db.Authors
+                .Where(a => a.Id == id)
                 .FirstOrDefaultAsync();
         }
 

@@ -14,5 +14,7 @@ namespace ApplicationCore.Contracts.Services
         //Task<int> UpdateAuthorAsync(AuthorModel book);
         Task<int> DeleteAuthorAsync(int id);
         Task<Author> GetAuthorByNameAsync(string name);
+        Task<Author> AddAuthorAsync(AuthorModel newAuthor);
+
     }
 }

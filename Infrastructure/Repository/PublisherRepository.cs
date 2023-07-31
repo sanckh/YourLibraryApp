@@ -6,14 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
     public class PublisherRepository : BaseRepository<Publisher>, IPublisherRepository
     {
-        public PublisherRepository(AppDbContext _con) : base(_con)
+        private readonly AppDbContext _dbContext;
+        public PublisherRepository(AppDbContext dbContext) : base(dbContext)
         {
-
+            _dbContext = dbContext;
         }
+        public async Task<Publisher> GetPublisherAsync(int publisherId)
+        {
+            return await _dbContext.Publishers.FindAsync(publisherId);
+        }
+
+
     }
 }

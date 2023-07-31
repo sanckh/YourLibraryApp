@@ -68,9 +68,6 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("PublisherId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PublisherId1")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Rating")
                         .HasColumnType("int");
 
@@ -84,8 +81,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PublisherId");
-
-                    b.HasIndex("PublisherId1");
 
                     b.ToTable("Books");
                 });
@@ -110,7 +105,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("Book_Author");
+                    b.ToTable("Book_Authors");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Publisher", b =>
@@ -209,14 +204,15 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateRead")
+                    b.Property<DateTime?>("DateRead")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Rating")
+                    b.Property<int?>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("Title")
-                        .HasColumnType("int");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -256,54 +252,11 @@ namespace Infrastructure.Migrations
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Models.AuthorModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("AuthorModel");
-                });
-
-            modelBuilder.Entity("ApplicationCore.Models.PublisherModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PublisherModel");
-                });
-
             modelBuilder.Entity("ApplicationCore.Entities.Book", b =>
                 {
-                    b.HasOne("ApplicationCore.Models.PublisherModel", "Publisher")
+                    b.HasOne("ApplicationCore.Entities.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherId");
-
-                    b.HasOne("ApplicationCore.Entities.Publisher", null)
-                        .WithMany("Books")
-                        .HasForeignKey("PublisherId1");
 
                     b.Navigation("Publisher");
                 });
@@ -317,7 +270,7 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("ApplicationCore.Entities.Book", "Book")
-                        .WithMany()
+                        .WithMany("BookAuthors")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -365,13 +318,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Models.AuthorModel", b =>
-                {
-                    b.HasOne("ApplicationCore.Entities.Book", null)
-                        .WithMany("Authors")
-                        .HasForeignKey("BookId");
-                });
-
             modelBuilder.Entity("ApplicationCore.Entities.Author", b =>
                 {
                     b.Navigation("Book_Authors");
@@ -379,7 +325,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationCore.Entities.Book", b =>
                 {
-                    b.Navigation("Authors");
+                    b.Navigation("BookAuthors");
 
                     b.Navigation("UserBooks");
                 });
@@ -399,11 +345,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("UserBooks");
 
                     b.Navigation("UserName");
-                });
-
-            modelBuilder.Entity("ApplicationCore.Models.PublisherModel", b =>
-                {
-                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

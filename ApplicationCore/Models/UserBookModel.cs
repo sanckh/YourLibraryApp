@@ -12,9 +12,9 @@ namespace ApplicationCore.Models
         public int Id { get; set; }
         public int Title { get; set; }
         public bool isRead { get; set; }
-        public int Rating { get; set; }
+        public int? Rating { get; set; }
         public DateTime DateAdded { get; set; }
-        public DateTime DateRead { get; set; }
+        public DateTime? DateRead { get; set; }
 
         //navigation props for book and user
         public int UserId { get; set; }

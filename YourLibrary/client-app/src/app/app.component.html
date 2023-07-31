@@ -42,7 +42,7 @@
       </mat-expansion-panel>
       <a mat-list-item (click)="sideNavOnHomeClicked()" [ngClass]="{'active-link': activeLink === 'home'}">Home</a>
       <a mat-list-item routerLink="/subscription">Subscription</a>
-      <a mat-list-item routerLink="/library">Your Library</a>
+      <a mat-list-item (click)="sideNavOnMyLibraryClicked()" [ngClass]="{'active-link': activeLink === 'mylibrary'}">Your Library</a>
       <a mat-list-item (click)="sideNavOnLogoutClicked()">Sign out</a>
     </mat-nav-list>
   </mat-sidenav>

@@ -17,6 +17,8 @@ namespace Infrastructure.Services
         private readonly IBook_AuthorRepository _book_AuthorRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly IAuthorService _authorService;
+        private readonly IPublisherRepository _publisherRepository;
+        private readonly IPublisherService _publisherService;
         public BookService(IBookRepository bookRepository, IBook_AuthorRepository book_AuthorRepository, IAuthorRepository authorRepository, IAuthorService authorService)
         {
             _bookRepository = bookRepository;
@@ -74,15 +76,15 @@ namespace Infrastructure.Services
                         Id = b.Book.Publisher.Id,
                         Name = b.Book.Publisher.Name,
                     },
-                    Authors = b.Book.Authors.Select(a => new AuthorModel
+                    Authors = b.Book.BookAuthors.Select(a => new AuthorModel
                     {
-                        Id = a.Id,
-                        FullName = a.FullName,
+                        Id = a.Author.Id,
+                        FullName = a.Author.FullName,
                     }).ToList(),
                 },
                 isRead = b.isRead,
-                DateRead = b.DateRead,
-                Rating = b.Rating,
+                DateRead = b.DateRead.HasValue ? b.DateRead.Value : null,
+                Rating = b.Rating.HasValue ? b.Rating.Value : 0,
             });
 
             return new PagedResult<UserBookModel>
@@ -134,10 +136,10 @@ namespace Infrastructure.Services
                         Id = userBook.Book.Publisher.Id,
                         Name = userBook.Book.Publisher.Name,
                     },
-                    Authors = userBook.Book.Authors.Select(a => new AuthorModel
+                    Authors = userBook.Book.BookAuthors.Select(a => new AuthorModel
                     {
-                        Id = a.Id,
-                        FullName = a.FullName,
+                        Id = a.Author.Id,
+                        FullName = a.Author.FullName,
                     }).ToList(),
                 }
             };
@@ -174,10 +176,10 @@ namespace Infrastructure.Services
                             Id = b.Book.Publisher.Id,
                             Name = b.Book.Publisher.Name,
                         },
-                        Authors = b.Book.Authors.Select(a => new AuthorModel
+                        Authors = b.Book.BookAuthors.Select(a => new AuthorModel
                         {
-                            Id = a.Id,
-                            FullName = a.FullName,
+                            Id = a.Author.Id,
+                            FullName = a.Author.FullName,
                         }).ToList(),
                     }
                 })
@@ -216,10 +218,10 @@ namespace Infrastructure.Services
                         Id = userBook.Book.Publisher.Id,
                         Name = userBook.Book.Publisher.Name,
                     },
-                    Authors = userBook.Book.Authors.Select(a => new AuthorModel
+                    Authors = userBook.Book.BookAuthors.Select(a => new AuthorModel
                     {
-                        Id = a.Id,
-                        FullName = a.FullName,
+                        Id = a.Author.Id,
+                        FullName = a.Author.FullName,
                     }).ToList(),
                 }
             };
@@ -234,7 +236,7 @@ namespace Infrastructure.Services
             var filteredUserBooks = userBooks
                 .Where(ub => ub.Book.Title.Contains(searchQuery) ||
                              ub.Book.Description.Contains(searchQuery) ||
-                             ub.Book.Authors.Any(a => a.FullName.Contains(searchQuery)) ||
+                             ub.Book.BookAuthors.Any(a => a.Author.FullName.Contains(searchQuery)) ||
                              ub.Book.Publisher.Name.Contains(searchQuery));
 
             var totalCount = filteredUserBooks.Count();
@@ -269,10 +271,10 @@ namespace Infrastructure.Services
                         Id = ub.Book.Publisher.Id,
                         Name = ub.Book.Publisher.Name,
                     },
-                    Authors = ub.Book.Authors.Select(a => new AuthorModel
+                    Authors = ub.Book.BookAuthors.Select(a => new AuthorModel
                     {
-                        Id = a.Id,
-                        FullName = a.FullName,
+                        Id = a.Author.Id,
+                        FullName = a.Author.FullName,
                     }).ToList(),
                 }
             });
@@ -325,6 +327,116 @@ namespace Infrastructure.Services
             return unreadBookModels;
         }
 
+        public async Task<UserBookModel> AddBookToUserLibraryAsync(int userId, BookModel newBook)
+        {
+            // Check if the book already exists in the database
+            var book = await _bookRepository.GetBookAsync(newBook.Id);
+            var userBook = await _bookRepository.GetUserBookAsync(userId, newBook.Id);
+
+            // If the book doesn't exist, add it to the database
+            if (book == null)
+            {
+                // If authors don't exist in the database, add them
+                foreach (var author in newBook.Authors)
+                {
+                    var existingAuthor = await _authorRepository.GetAuthorAsync(author.Id);
+                    if (existingAuthor == null)
+                    {
+                        var newAuthor = new AuthorModel {
+                            FullName = author.FullName
+                        };  // You will need to fetch the full author data here
+                        await _authorService.AddAuthorAsync(newAuthor);
+                    }
+                }
+
+                // If the publisher doesn't exist in the database, add it
+                var existingPublisher = await _publisherRepository.GetPublisherAsync(newBook.Publisher.Id);
+                if (existingPublisher == null)
+                {
+                    var newPublisher = new PublisherModel {
+                        Name = newBook.Publisher.Name
+                    };  // You will need to fetch the full publisher data here
+                    await _publisherService.AddPublisherAsync(newPublisher);
+                }
+
+                // Add the book to the database
+                book = await _bookRepository.AddBookAsync(newBook);
+            }
+            else if (userBook != null)
+            {
+                // If user already has this book in the library, throw an exception
+                throw new InvalidOperationException("The user already has this book in their library.");
+            }
+
+            // Add the book to the user's library
+            userBook = await _bookRepository.AddBookToUserLibraryAsync(userId, book.Id, book.Title);
+
+            // Map to UserBookModel and return
+            var userBookModel = new UserBookModel
+            {
+                UserId = userBook.UserId,
+                BookId = userBook.BookId,
+                isRead = userBook.isRead,
+                DateRead = userBook.DateRead,
+                Rating = userBook.Rating,
+                DateAdded = userBook.DateAdded,
+                Book = new BookModel
+                {
+                    Id = userBook.Book.Id,
+                    Title = userBook.Book.Title,
+                    Description = userBook.Book.Description,
+                    Genre = userBook.Book.Genre,
+                    CoverUrl = userBook.Book.CoverUrl,
+                    DateAdded = userBook.Book.DateAdded,
+                    Publisher = new PublisherModel { Id = userBook.Book.Publisher.Id, Name = userBook.Book.Publisher.Name },
+                    Authors = userBook.Book.BookAuthors.Select(a => new AuthorModel { Id = a.Author.Id, FullName = a.Author.FullName }).ToList()
+                }
+            };
+
+            return userBookModel;
+        }
+
+
+        public async Task<int> AddBookAsync(BookModel newBook)
+        {
+            var book = await _bookRepository.GetBookAsync(newBook.Id);
+
+            // If the book doesn't exist, add it to the database
+            if (book == null)
+            {
+                // If authors don't exist in the database, add them
+                foreach (var author in newBook.Authors)
+                {
+                    var existingAuthor = await _authorRepository.GetAuthorAsync(author.Id);
+                    if (existingAuthor == null)
+                    {
+                        await _authorService.AddAuthorAsync(author);
+                    }
+
+                    //add relation between author and book
+                    // this should be done after the book is added, so moving it down
+
+                }
+
+                //if publisher doesn't exist in the db, add it
+                var existingPublisher = await _publisherRepository.GetPublisherAsync(newBook.Publisher.Id);
+                if (existingPublisher == null)
+                {
+                    await _publisherService.AddPublisherAsync(newBook.Publisher);
+                }
+
+                //add book
+                book = await _bookRepository.AddBookAsync(newBook);
+
+                //now we have the book id, add relations
+
+                foreach(var author in newBook.Authors)
+                {
+                    await _book_AuthorRepository.AddBookAuthorAsync(author.Id, book.Id);
+                }
+            }
+            return book.Id;
+        }
 
     }
 }

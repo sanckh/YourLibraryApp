@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
+using ApplicationCore.Models;
 
 namespace ApplicationCore.Contracts.Repository
 {
@@ -13,5 +14,10 @@ namespace ApplicationCore.Contracts.Repository
         Task<UserBook> GetUserBookAsync(int userId, int bookId);
         Task DeleteUserBookAsync(UserBook userBook);
         Task<IEnumerable<UserBook>> GetAllBooksByUserIdAsync(int userId);
+        Task<Book> AddBookAsync(BookModel newBook);
+        Task<Book> GetBookAsync(int bookId);
+        Task<UserBook> AddBookToUserLibraryAsync(int userId, int bookId, string title);
+
+
     }
 }

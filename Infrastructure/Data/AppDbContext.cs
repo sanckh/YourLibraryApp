@@ -43,5 +43,6 @@ namespace Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserBook> UserBooks { get; set; }
+        public DbSet<Book_Author> Book_Authors { get; set; }
     }
 }

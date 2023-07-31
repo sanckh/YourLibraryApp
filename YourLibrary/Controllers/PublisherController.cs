@@ -21,7 +21,7 @@ namespace YourLibrary.API.Controllers
         [HttpPost("AddPublisher")]
         public async Task<ActionResult> AddPublisherAsync([FromBody] PublisherModel publisher)
         {
-            _publisherService.AddPublisher(publisher);
+            await _publisherService.AddPublisherAsync(publisher);
 
             return Ok();
         }

@@ -2,8 +2,10 @@
 using ApplicationCore.Contracts.Services;
 using ApplicationCore.Entities;
 using ApplicationCore.Models;
+using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace Infrastructure.Services
     public class AuthorService : IAuthorService
     {
         private readonly IAuthorRepository authorRepository;
+
         public AuthorService(IAuthorRepository _auth)
         {
             authorRepository = _auth;
@@ -44,6 +47,22 @@ namespace Infrastructure.Services
             var author = await authorRepository.GetAllAsync();
             return author.Where(x => x.FullName == name).FirstOrDefault();
         }
+
+        public async Task<Author> AddAuthorAsync(AuthorModel newAuthor)
+        {
+            var author = new Author
+            {
+                Id = newAuthor.Id,
+                FullName = newAuthor.FullName,
+                // Fill in other fields as needed
+            };
+
+            await authorRepository.AddAsync(author);
+            await authorRepository.SaveChangesAsync();
+
+            return author;
+        }
+
 
 
     }

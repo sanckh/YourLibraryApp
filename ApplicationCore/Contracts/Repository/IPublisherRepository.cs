@@ -9,5 +9,7 @@ namespace ApplicationCore.Contracts.Repository
 {
     public interface IPublisherRepository : IRepository<Publisher>
     {
+        Task<Publisher> GetPublisherAsync(int publisherId);
+
     }
 }
