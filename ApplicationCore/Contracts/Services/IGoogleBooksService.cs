@@ -11,7 +11,7 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IGoogleBooksService
     {
-        Task<BookSearchResponseModel> SearchBooks(string query, int startIndex, int maxResults);
+        Task<BookSearchResponseModel> SearchBooks(string query, int startIndex);
         Task<BookDetailsModel> GetBookDetails(int bookId);
     }
 }

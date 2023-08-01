@@ -7,7 +7,7 @@ import { UserService } from './shared/services/user-service/user.service';
 import { AuthService } from './shared/services/auth.service'
 //Models
 import { CurrentUserModel } from './shared/models/currentuser-model';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { GoogleBooksService } from './shared/services/google-books.service';
 import { BookSearchResponseModel, Item } from './shared/models/booksearchresponsemodel';
 
@@ -23,8 +23,9 @@ export class AppComponent implements OnInit {
   searchTerm: string;
   isSearchModalOpen: boolean;
   searchResults: Item[];
-  pageIndex: 0;
-  pageSize: 10;
+  pageIndex = 0;
+  pageSize = 10;
+
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -66,18 +67,20 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/mylibrary']);
   }
 
+  //i do not yet know why but when the modal opens it runs the google service in the search component also
   openSearchModal() {
-    this.googleBooksService.getBooks(this.searchTerm, this.pageIndex * this.pageSize, this.pageSize)
-      .subscribe((data: BookSearchResponseModel) => {
-      if (data && data.items) {
-        this.searchResults = data.items;
+  //  this.googleBooksService.getBooks(this.searchTerm, this.pageIndex * 10, this.pageSize)
+  //    .subscribe((data: BookSearchResponseModel) => {
+  //    if (data && data.items) {
+  //      this.searchResults = data.items;
+  //      console.log('Total items from API app.component: ', data.totalItems)
         this.isSearchModalOpen = true;
-      } else {
-        console.log('No items found in the response data');
-      }
-    }, error => {
-      console.error('Error: ', error);
-    });
+  //    } else {
+  //      console.log('No items found in the response data');
+  //    }
+  //  }, error => {
+  //    console.error('Error: ', error);
+  //  });
   }
 
   onSubmit(searchTerm: string) {

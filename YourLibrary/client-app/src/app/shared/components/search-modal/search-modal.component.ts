@@ -24,10 +24,11 @@ export class SearchModalComponent implements OnInit {
 
 
   updatePage() {
-    this.googleBooksService.getBooks(this.query, this.pageIndex * 10, this.pageSize)
+    this.googleBooksService.getBooks(this.query, this.pageIndex)
       .subscribe((data: BookSearchResponseModel) => {
         if (data && data.items) {
           this.searchResults = data.items;
+          console.log("page index: ", this.pageIndex)
           console.log('Total items from API', data.totalItems)
           this.totalPages = Math.ceil(data.totalItems / this.pageSize);
         }

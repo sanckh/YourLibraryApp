@@ -13,11 +13,10 @@ export class GoogleBooksService {
 
   constructor(private http: HttpClient) { }
 
-  getBooks(query: string, startIndex: number = 0, pageSize: number = 10): Observable<BookSearchResponseModel> {
+  getBooks(query: string, startIndex: number = 0): Observable<BookSearchResponseModel> {
     const params = new HttpParams()
       .set('query', query)
       .set('startIndex', startIndex.toString())
-      .set('maxResults', pageSize.toString())
     return this.http.get<BookSearchResponseModel>(this.searchUrl, { params: params }).pipe(
       catchError((error) => {
         console.error("Error retrieving books: ", error);

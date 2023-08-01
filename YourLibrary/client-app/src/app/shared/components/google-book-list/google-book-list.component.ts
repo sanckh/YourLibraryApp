@@ -22,9 +22,8 @@ export class GoogleBookListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.query = params['query'];
-    })
+
+
   }
 
 }

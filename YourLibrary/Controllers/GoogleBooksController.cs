@@ -20,9 +20,9 @@ namespace YourLibrary.API.Controllers
 
         // Endpoint to search for books.
         [HttpGet("search")]
-        public async Task<IActionResult> SearchBooks(string query, int startIndex = 0, int maxResults = 10)
+        public async Task<IActionResult> SearchBooks(string query, int startIndex = 0)
         {
-            var results = await _googleBooksService.SearchBooks(query, startIndex, maxResults);
+            var results = await _googleBooksService.SearchBooks(query, startIndex);
             return Ok(results);
         }
 

@@ -33,9 +33,9 @@ namespace Infrastructure.Services
             return JsonConvert.DeserializeObject<BookDetailsModel>(content);
         }
 
-        public async Task<BookSearchResponseModel> SearchBooks(string query, int startIndex = 0, int maxResults = 10)
+        public async Task<BookSearchResponseModel> SearchBooks(string query, int startIndex = 0)
         {
-            var response = await _client.GetAsync($"https://www.googleapis.com/books/v1/volumes?q={query}&startIndex={startIndex}&maxResults={maxResults}&key={_apiKey}");
+            var response = await _client.GetAsync($"https://www.googleapis.com/books/v1/volumes?q={query}&startIndex={startIndex}&key={_apiKey}");
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
