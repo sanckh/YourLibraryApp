@@ -37,7 +37,7 @@ namespace Infrastructure.Services
                 LastName = user.LastName,
                 HashedPassword = password,
                 Salt = salt,
-                DateOfBirth = DateTime.UtcNow,
+                DateOfBirth = user.DateOfBirth,
             };
 
             await userRepository.InsertAsync(u);

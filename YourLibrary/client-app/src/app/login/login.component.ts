@@ -83,9 +83,10 @@ export class LoginComponent implements OnInit {
   }
 
   register(registerRequest: UserRegisterRequestModel): void {
+    registerRequest.dateOfBirth = new Date(registerRequest.dateOfBirth).toISOString();
+
     this.authService.register(registerRequest).subscribe(
       (response) => {
-        console.log("Registration Successful!")
         this.sweetAlertService.showSuccessAlert('Success', 'Registration completed successfully')
         .then((result) => {
           // Handle the user's action after the alert is closed

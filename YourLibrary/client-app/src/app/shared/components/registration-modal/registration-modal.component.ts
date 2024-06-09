@@ -27,7 +27,7 @@ export class RegistrationModalComponent implements OnInit {
       password: ['', [Validators.minLength(5), Validators.required]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      dateOfBirth: [''] // Optional field, no validators added
+      dateOfBirth: [''] 
     });
   }
 
