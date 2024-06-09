@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ApplicationCore
-build_property.ProjectDir = c:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\
+build_property.ProjectDir = C:\Programming\YourLibrary\ApplicationCore\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
