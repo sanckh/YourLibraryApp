@@ -8,7 +8,7 @@
 .search-input {
   width: 100%;
   box-sizing: border-box;
-  padding-right: 40px; /* make room for the button */
+  padding-right: 40px;
 }
 
 .search-button {
@@ -16,7 +16,7 @@
   right: 0;
   top: 0;
   height: 100%;
-  width: 40px; /* adjust this if you want the button larger or smaller */
+  width: 40px; 
   border: none;
   background: none;
   cursor: pointer;

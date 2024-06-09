@@ -4,7 +4,6 @@ C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.Assembly
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.csproj.CoreCompileInputs.cache
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.MvcApplicationPartsAssemblyInfo.cache
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\appsettings.Development.json
-C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\appsettings.json
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\angular.json
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\package-lock.json
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\client-app\package.json
@@ -15,7 +14,6 @@ C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\YourLibrary.API.exe
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\YourLibrary.API.deps.json
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\YourLibrary.API.runtimeconfig.json
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\YourLibrary.API.dll
-C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\ref\YourLibrary.API.dll
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\YourLibrary.API.pdb
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Azure.Core.dll
 C:\Programming\YourLibrary\YourLibrary\bin\Debug\net6.0\Azure.Identity.dll
@@ -101,7 +99,6 @@ C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.MvcAppli
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\staticwebassets.build.json
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\staticwebassets.development.json
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\scopedcss\bundle\YourLibrary.API.styles.css
-C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.csproj.CopyComplete
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.dll
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\ref\YourLibrary.API.dll
 C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.pdb
@@ -219,3 +216,11 @@ C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\r
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\YourLibrary.API.pdb
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\YourLibrary.API.genruntimeconfig.cache
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\YourLibrary\obj\Debug\net6.0\ref\YourLibrary.API.dll
+C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibrary.API.sourcelink.json
+C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\staticwebassets\msbuild.YourLibrary.API.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\staticwebassets\msbuild.build.YourLibrary.API.props
+C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.YourLibrary.API.props
+C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.YourLibrary.API.props
+C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\YourLibr.12A584EA.Up2Date
+C:\Programming\YourLibrary\YourLibrary\obj\Debug\net6.0\refint\YourLibrary.API.dll

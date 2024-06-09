@@ -1,7 +1,6 @@
 C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.deps.json
 C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.runtimeconfig.json
 C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.dll
-C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ref\ApplicationCore.dll
 C:\Programming\YourLibrary\ApplicationCore\bin\Debug\net6.0\ApplicationCore.pdb
 C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.GeneratedMSBuildEditorConfig.editorconfig
 C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.AssemblyInfoInputs.cache
@@ -26,3 +25,5 @@ C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\obj\Debug\net6
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\obj\Debug\net6.0\ApplicationCore.pdb
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\obj\Debug\net6.0\ApplicationCore.genruntimeconfig.cache
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\ApplicationCore\obj\Debug\net6.0\ref\ApplicationCore.dll
+C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\ApplicationCore.sourcelink.json
+C:\Programming\YourLibrary\ApplicationCore\obj\Debug\net6.0\refint\ApplicationCore.dll

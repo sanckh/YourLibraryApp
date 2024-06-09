@@ -6,11 +6,9 @@ C:\Programming\YourLibrary\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj
 C:\Programming\YourLibrary\Infrastructure\bin\Debug\net6.0\Infrastructure.deps.json
 C:\Programming\YourLibrary\Infrastructure\bin\Debug\net6.0\Infrastructure.runtimeconfig.json
 C:\Programming\YourLibrary\Infrastructure\bin\Debug\net6.0\Infrastructure.dll
-C:\Programming\YourLibrary\Infrastructure\bin\Debug\net6.0\ref\Infrastructure.dll
 C:\Programming\YourLibrary\Infrastructure\bin\Debug\net6.0\Infrastructure.pdb
 C:\Programming\YourLibrary\Infrastructure\bin\Debug\net6.0\ApplicationCore.dll
 C:\Programming\YourLibrary\Infrastructure\bin\Debug\net6.0\ApplicationCore.pdb
-C:\Programming\YourLibrary\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CopyComplete
 C:\Programming\YourLibrary\Infrastructure\obj\Debug\net6.0\Infrastructure.dll
 C:\Programming\YourLibrary\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
 C:\Programming\YourLibrary\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
@@ -32,3 +30,6 @@ C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\Infrastructure\obj\Debug\net6.
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
 C:\Users\Daddy\ProgrammingProjects\YourLibraryApp\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
+C:\Programming\YourLibrary\Infrastructure\obj\Debug\net6.0\Infrastructure.sourcelink.json
+C:\Programming\YourLibrary\Infrastructure\obj\Debug\net6.0\Infrastr.15EFFBFE.Up2Date
+C:\Programming\YourLibrary\Infrastructure\obj\Debug\net6.0\refint\Infrastructure.dll
